@@ -36,14 +36,26 @@ namespace DigikabuRework
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+
+            Login();
             
-            mvm.LoginAppStart(PW.Password, this);
-            this.Close();
         }
 
         public void ThrowErrorMessage(string msg)
         {
             MessageBox.Show(msg, "Es ist ein Fehler aufgetretten", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+        private async Task Login()
+        {
+            try
+            {
+                await mvm.LoginAppStart(PW.Password, this);
+                this.Close();
+            }
+            catch (Exception)
+            {
+
+            }
         }
     }
 }

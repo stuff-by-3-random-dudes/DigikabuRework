@@ -10,9 +10,10 @@ namespace DigikabuRework.Klassen
     {
         public string Tag { get; set; }
         public string Termin { get; set; }
-        public Termine()
+        public Termine(string t, string te)
         {
-
+            Tag = t;
+            Termin = te;
         }
     }
 }

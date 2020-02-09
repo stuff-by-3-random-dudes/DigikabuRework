@@ -14,7 +14,7 @@
         <DataGrid x:Name="SP" HorizontalAlignment="Left" Height="395" Margin="32,65,0,0" VerticalAlignment="Top" Width="452" Background="LightGray" ItemsSource="{Binding Stundenplan}" SelectionMode="Single" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" CanUserResizeColumns="False" CanUserResizeRows="False" SelectedItem="{Binding SelStunde}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Stunde" Binding="{Binding Schulstunde}"/>
-                <DataGridTextColumn Header="Von - Bis" Binding="{Binding VonBis}"/>
+                <DataGridTextColumn Header="Von - Bis" Binding="{Binding Std}"/>
                 <DataGridTextColumn Header="Fach" Binding="{Binding Fach}"/>
             </DataGrid.Columns>
         </DataGrid>

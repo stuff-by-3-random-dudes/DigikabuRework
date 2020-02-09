@@ -12,7 +12,7 @@ using DigikabuRework.Interfaces;
 
 namespace DigikabuRework
 {
-    class MainViewModel
+    class MainViewModel : BaseModel
     {
         public string UserName { get; set; }
         public string Password { get; set; }
@@ -20,8 +20,31 @@ namespace DigikabuRework
 
         public Stunde SelStunde { get; set; }
 
-        public List<Stunde> Stundenplan { get; set; } = new List<Stunde>();
-        public List<Termine> Terminplan { get; set; } = new List<Termine>();
+        private List<Stunde> stundenplan = new List<Stunde>();
+
+
+        public List<Stunde> Stundenplan
+        {
+            get { return stundenplan; }
+            set { stundenplan = value;
+                onPropertyChanged();
+            }
+        }
+        private List<Termine> terminplan = new List<Termine>();
+
+
+        public List<Termine> Terminplan
+        {
+            get { return terminplan; }
+            set
+            {
+                terminplan = value;
+                onPropertyChanged();
+            }
+        }
+
+
+       
 
         private DigiCon Connection;
 
@@ -30,27 +53,30 @@ namespace DigikabuRework
 
         public MainViewModel()
         {
+            StundenDauer.SetupStundenDauerListe();
             UserName = Settings.Default.UserName;
             KeepData = Settings.Default.keepData;
             Connection = new DigiCon(this);
+
+
         }
         
-        public void LoginAppStart(string pwd, object sender)
+        public async Task LoginAppStart(string pwd, object sender)
         {
             Password = pwd;
-            Login(sender);
+            await LoginAsync(sender);
         }
-        public void Login(object sender)
+        public async Task LoginAsync(object sender)
         {
             try
             {
-                //throw new Exception("test");
-                Sinfo = new SchuelerInfo(UserName, "testklasse");
+                await Connection.LoginAsync();
                 OpenMenu();
             }
             catch (Exception e)
             {
                 (sender as ErrorThrower).ThrowErrorMessage(e.Message);
+                throw new Exception();
             }
            
 
@@ -60,6 +86,9 @@ namespace DigikabuRework
             UI.MenuWindow mw = new UI.MenuWindow();
             mw.Show();
         }
-        
+        public async Task getStundenUndTermine()
+        {
+            await Connection.getStundenUndTermine();
+        }
     }
 }

@@ -21,10 +21,17 @@ namespace DigikabuRework.UI.Frames
     /// </summary>
     public partial class Tagesplan_Termine : Page
     {
+        MainViewModel mvm;
         public Tagesplan_Termine()
         {
+            mvm = (MainViewModel)FindResource("mvm");
+            getStundenPlanUndTermine();
             InitializeComponent();
             
+        }
+        public async Task getStundenPlanUndTermine()
+        {
+           await mvm.getStundenUndTermine();
         }
         public void changeStunde()
         {
