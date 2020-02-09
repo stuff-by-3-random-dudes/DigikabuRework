@@ -1,0 +1,29 @@
+﻿<Page x:Class="DigikabuRework.UI.Frames.Tagesplan_Termine"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:DigikabuRework.UI.Frames"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d" 
+      d:DesignHeight="480" d:DesignWidth="1130"
+      Title="Tagesplan_Termine" >
+
+    <Grid DataContext="{StaticResource mvm}">
+        <TextBlock HorizontalAlignment="Left" Margin="32,27,0,0" TextWrapping="Wrap" Text="Stundenplan" VerticalAlignment="Top" FontSize="25"/>
+        <DataGrid x:Name="SP" HorizontalAlignment="Left" Height="395" Margin="32,65,0,0" VerticalAlignment="Top" Width="452" Background="LightGray" ItemsSource="{Binding Stundenplan}" SelectionMode="Single" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" CanUserResizeColumns="False" CanUserResizeRows="False" SelectedItem="{Binding SelStunde}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Stunde" Binding="{Binding Schulstunde}"/>
+                <DataGridTextColumn Header="Von - Bis" Binding="{Binding VonBis}"/>
+                <DataGridTextColumn Header="Fach" Binding="{Binding Fach}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <TextBlock HorizontalAlignment="Left" Margin="646,27,0,0" TextWrapping="Wrap" Text="Termine" VerticalAlignment="Top" FontSize="25" Width="144"/>
+        <DataGrid HorizontalAlignment="Left" Height="395" Margin="646,65,0,0" VerticalAlignment="Top" Width="448" Background="LightGray" ItemsSource="{Binding Terminplan}" SelectionMode="Single" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" CanUserResizeColumns="False" CanUserResizeRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Tag" Binding="{Binding Tag}"/>
+                <DataGridTextColumn Header="Termin" Binding="{Binding Termin}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>
