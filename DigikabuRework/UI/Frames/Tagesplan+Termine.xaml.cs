@@ -89,8 +89,11 @@ namespace DigikabuRework.UI.Frames
 
         private void SP_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            StundenInfo si = new StundenInfo();
-            si.ShowDialog();
+            if(SP.SelectedIndex != -1)
+            {
+                StundenInfo si = new StundenInfo();
+                si.ShowDialog();
+            }
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
