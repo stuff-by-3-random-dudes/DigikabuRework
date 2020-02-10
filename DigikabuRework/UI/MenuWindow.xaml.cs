@@ -20,10 +20,12 @@ namespace DigikabuRework.UI
     /// </summary>
     public partial class MenuWindow : Window, ErrorThrower
     {
+        MainViewModel mvm;
         public MenuWindow()
         {
             InitializeComponent();
             load_frame.Content = new Frames.Tagesplan_Termine();
+            mvm = (MainViewModel)FindResource("mvm");
         }
         private void ButtonCloseMenu_Click(object sender, RoutedEventArgs e)
         {
@@ -49,9 +51,15 @@ namespace DigikabuRework.UI
             }
             
         }
-
+        private void DestroyFrame()
+        {
+            //(load_frame.Content as IDisposable).Dispose();
+            load_frame.Content = null;
+            load_frame.NavigationService.RemoveBackEntry();
+        }
         private void ListView_Click(object sender, MouseButtonEventArgs e)
         {
+            DestroyFrame();
             switch ((sender as ListView).SelectedIndex)
             {
                 case 0:

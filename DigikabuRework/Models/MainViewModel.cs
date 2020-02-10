@@ -18,7 +18,7 @@ namespace DigikabuRework
         public string UserName { get; set; }
         public string Password { get; set; }
         public bool KeepData { get; set; }
-
+        
         public Stunde SelStunde { get; set; }
 
         private List<Stunde> stundenplan = new List<Stunde>();

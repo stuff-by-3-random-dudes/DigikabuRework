@@ -19,27 +19,32 @@ namespace DigikabuRework.UI.Frames
     /// <summary>
     /// Interaktionslogik für Tagesplan_Termine.xaml
     /// </summary>
-    public partial class Tagesplan_Termine : Page
+    public partial class Tagesplan_Termine : Page, IDisposable
     {
         MainViewModel mvm;
-        private static System.Windows.Threading.DispatcherTimer dispatcherTimer = null;
+
+        private System.Windows.Threading.DispatcherTimer dispatcherTimer = null;
+
         public Tagesplan_Termine()
         {
             mvm = (MainViewModel)FindResource("mvm");
-            getStundenPlanUndTermine(); 
-            InitializeComponent();
+            getStundenPlanUndTermine();
             SetupTimer();
+            InitializeComponent();
+            
         }
 
         private void SetupTimer()
         {
             if (dispatcherTimer == null)
             {
+                
                 dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
                 dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
                 dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+                Console.WriteLine("Setup Timer");
             }
-            dispatcherTimer.Start();
+            
         }
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
@@ -50,6 +55,7 @@ namespace DigikabuRework.UI.Frames
         public async Task getStundenPlanUndTermine()
         {
            await mvm.getStundenUndTermine();
+            
         }
         public void changeStunde()
         {
@@ -75,6 +81,25 @@ namespace DigikabuRework.UI.Frames
         {
             StundenInfo si = new StundenInfo();
             si.ShowDialog();
+        }
+
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            dispatcherTimer.Stop();
+            Console.WriteLine("Stopped");
+        }
+
+        public void Dispose()
+        {
+            dispatcherTimer.Stop();
+            dispatcherTimer = null;
+
+        }
+
+        private void Page_Initialized(object sender, EventArgs e)
+        {
+            //SetupTimer();
+            dispatcherTimer.Start();
         }
     }
 }

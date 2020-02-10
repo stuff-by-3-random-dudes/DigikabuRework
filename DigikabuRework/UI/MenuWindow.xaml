@@ -39,7 +39,7 @@
 
     <Grid DataContext="{StaticResource mvm}">
         <Grid Margin="60,70,0,0">
-            <Frame x:Name="load_frame"/>
+            <Frame x:Name="load_frame" NavigationUIVisibility="Hidden"/>
         </Grid>
         <Grid Height="72" VerticalAlignment="Top" Margin="0,-2,0,0">
             <Grid.Background>
