@@ -52,7 +52,39 @@ namespace DigikabuRework.UI
 
         private void ListView_Click(object sender, MouseButtonEventArgs e)
         {
-
+            switch ((sender as ListView).SelectedIndex)
+            {
+                case 0:
+                    load_frame.Content = new Frames.Tagesplan_Termine();
+                    Fenster.Text = "Digikabu - Termine";
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    
+                    Fenster.Text = "Digikabu - Wochenstundenplan";
+                    break;
+                case 3:
+                    
+                    Fenster.Text = "Digikabu - Schulaufgabenplan";
+                    break;
+                case 4:
+                    
+                    Fenster.Text = "Digikabu - Speiseplan";
+                    break;
+                case 5:
+                    
+                    Fenster.Text = "Digikabu - Entschuldigung";
+                    break;
+                case 6:
+                    
+                    Fenster.Text = "Digikabu - Fehlzeiten";
+                    break;
+                case 7:
+                    
+                    Fenster.Text = "Digikabu - Einstellungen";
+                    break;
+            }
         }
 
         private void Window_Close(object sender, RoutedEventArgs e)

@@ -140,6 +140,7 @@ namespace DigikabuRework.Connection
                 bool pause = false;
                 string klassenzimmer = string.Empty;
                 string lehrer = string.Empty;
+                bool naechste = false;
                 bool written = false;
                 foreach (string s in responsestring.Split('<'))
                 {
@@ -158,13 +159,24 @@ namespace DigikabuRework.Connection
                         fach2 = Convert.ToInt32(fachx[1]) / 60;
                         fach = Convert.ToInt32(fach1[1]) / 60;
                     }
-                    if (s.StartsWith("text class='sp' y='13' x='2'") || s.StartsWith("text class='sp_small' y='13' x='2'"))
+                    if (s.StartsWith("text class='sp' y='13' x='2'"))
                     {
                         string[] split = s.Split('>');
                        
                         lehrer = split[1];
 
                         
+                    }else if(s.StartsWith("text class='sp_small' y='13' x='2'"))
+                    {
+                        string[] split = s.Split('>');
+                        if (!naechste)
+                        {
+                            lehrer = split[1];
+                        }
+                        else
+                        {
+                            lehrer += $"/{split[0]}";
+                        }
                     }
 
                     if (s.Contains("text-anchor='end'"))
@@ -192,8 +204,14 @@ namespace DigikabuRework.Connection
                             }
                             if(splitfach1[1] != "115")
                             {
-                               ret.Add(new Klassen.Stunde((Klassen.Schulstunden)fach, stunde,lehrer, klassenzimmer));
-                                written = true;
+                                if (!naechste)
+                                {
+                                    ret.Add(new Klassen.Stunde((Klassen.Schulstunden)fach, stunde, lehrer, klassenzimmer));
+                                    written = true;
+                                }
+                                
+                               
+                                
                             }
                             else
                             {
@@ -211,9 +229,14 @@ namespace DigikabuRework.Connection
                             }
                             if (splitfach1[1] != "115")
                             {
-                                ret.Add(new Klassen.Stunde((Klassen.Schulstunden)fach, stunde, lehrer, klassenzimmer));
-                                ret.Add(new Klassen.Stunde((Klassen.Schulstunden)fach+1, stunde, lehrer, klassenzimmer));
-                                written = true;
+                                if (!naechste)
+                                {
+                                    ret.Add(new Klassen.Stunde((Klassen.Schulstunden)fach, stunde, lehrer, klassenzimmer));
+                                    ret.Add(new Klassen.Stunde((Klassen.Schulstunden)fach + 1, stunde, lehrer, klassenzimmer));
+                                    written = true;
+                                }
+                                
+                                
                             }
                             else
                             {
@@ -223,10 +246,16 @@ namespace DigikabuRework.Connection
                         else{
                             if (splitfach1[1] != "115")
                             {
-                                ret.Add(new Klassen.Stunde((Klassen.Schulstunden)fach, stunde, lehrer, klassenzimmer));
-                                ret.Add(new Klassen.Stunde((Klassen.Schulstunden)fach + 1, stunde, lehrer, klassenzimmer));
-                                ret.Add(new Klassen.Stunde((Klassen.Schulstunden)fach + 2, stunde, lehrer, klassenzimmer));
-                                written = true;
+                                if (!naechste)
+                                {
+                                    ret.Add(new Klassen.Stunde((Klassen.Schulstunden)fach, stunde, lehrer, klassenzimmer));
+                                    ret.Add(new Klassen.Stunde((Klassen.Schulstunden)fach + 1, stunde, lehrer, klassenzimmer));
+                                    ret.Add(new Klassen.Stunde((Klassen.Schulstunden)fach + 2, stunde, lehrer, klassenzimmer));
+                                    written = true;
+                                }
+                                
+
+                                
                             }
                             else
                             {
