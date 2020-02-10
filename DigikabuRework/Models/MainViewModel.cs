@@ -14,7 +14,19 @@ namespace DigikabuRework
 {
     class MainViewModel : BaseModel
     {
-        public TimeSpan ZeitBisNaechsteStunde { get; set; } = new TimeSpan();
+        private TimeSpan zeitBisNaechsteStunde = new TimeSpan();
+        public TimeSpan ZeitBisNaechsteStunde
+        {
+            get
+            {
+                return zeitBisNaechsteStunde;
+            }
+            set
+            {
+                zeitBisNaechsteStunde = value;
+                onPropertyChanged();
+            }
+        }
         public string UserName { get; set; }
         public string Password { get; set; }
         public bool KeepData { get; set; }
