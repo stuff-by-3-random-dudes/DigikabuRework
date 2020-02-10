@@ -97,7 +97,7 @@ namespace DigikabuRework
             GetSpeiseplan();
         }
 
-        [STAThread]
+        
         public async Task LoginAppStart(string pwd, object sender)
         {
             if (KeepData)
@@ -114,7 +114,7 @@ namespace DigikabuRework
             Password = pwd;
             await LoginAsync(sender);
         }
-        [STAThread]
+        
         public async Task LoginAsync(object sender)
         {
             try
@@ -139,7 +139,7 @@ namespace DigikabuRework
             UI.MenuWindow mw = new UI.MenuWindow();
             mw.Show();
         }
-        [STAThread]
+        
         public async Task GetStundenUndTermine()
         {
             stundenplan.Clear();

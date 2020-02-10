@@ -59,6 +59,7 @@ namespace DigikabuRework.UI
         }
         private void ListView_Click(object sender, MouseButtonEventArgs e)
         {
+            if((sender as ListView).SelectedIndex != 1)
             DestroyFrame();
             
             switch ((sender as ListView).SelectedIndex)
@@ -67,13 +68,12 @@ namespace DigikabuRework.UI
                     TimerWindow tw = new TimerWindow();
                     tw.Show();
                    
-                    goto case 0;
+                    goto case 8;
      
                 case 0:
                     
                     load_frame.Content = new Frames.Tagesplan_Termine();
-                    (sender as ListView).SelectedIndex = 0;
-                    Console.WriteLine((sender as ListView).SelectedIndex);
+                   
                     Fenster.Text = "Digikabu - Termine";
                     break;
                 case 2:
@@ -99,6 +99,10 @@ namespace DigikabuRework.UI
                 case 7:
                     
                     Fenster.Text = "Digikabu - Einstellungen";
+                    break;
+                case 8:
+                    (sender as ListView).SelectedIndex = 0;
+                    Console.WriteLine((sender as ListView).SelectedIndex);
                     break;
             }
         }
