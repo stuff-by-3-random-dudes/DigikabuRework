@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DigikabuRework.UI"
         mc:Ignorable="d"
-        Title="TimerWindow" Height="450" Width="800">
+        Title="TimerWindow" Height="122.841" Width="205.85">
     <Grid DataContext="{StaticResource mvm}">
-        <TextBox Text="{Binding ZeitBisNaechsteStunde}"/>
+        <TextBlock Text="{Binding ZeitBisNaechsteStundeAsString}">
+        </TextBlock>
     </Grid>
 </Window>
