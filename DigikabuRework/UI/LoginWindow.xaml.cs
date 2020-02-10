@@ -34,10 +34,10 @@ namespace DigikabuRework
                 this.DragMove();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async Task Button_Click(object sender, RoutedEventArgs e)
         {
 
-            Login();
+           await Login();
             
         }
 

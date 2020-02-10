@@ -140,9 +140,7 @@ namespace DigikabuRework.Connection
                 bool pause = false;
                 string klassenzimmer = string.Empty;
                 string lehrer = string.Empty;
-                bool zwei = false;
                 bool written = false;
-                bool next = false;
                 foreach (string s in responsestring.Split('<'))
                 {
                     if (written)

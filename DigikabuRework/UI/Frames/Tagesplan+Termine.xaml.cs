@@ -26,7 +26,7 @@ namespace DigikabuRework.UI.Frames
         public Tagesplan_Termine()
         {
             mvm = (MainViewModel)FindResource("mvm");
-            getStundenPlanUndTermine(); // vllt auch kein await
+            getStundenPlanUndTermine(); 
             InitializeComponent();
             SetupTimer();
         }
