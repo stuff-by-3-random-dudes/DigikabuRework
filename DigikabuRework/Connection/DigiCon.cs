@@ -411,5 +411,63 @@ namespace DigikabuRework.Connection
 
             }
         }
+        public async Task GetSpeiseplan()
+        {
+            List<string> sp = new List<string>();
+            var response = await client.GetAsync("https://www.bs-wiesau.de/index.php/bsz-wiesau/speiseplan-bistro");
+            var responseString = await response.Content.ReadAsStringAsync();
+            string[] els = responseString.Split('>');
+
+            bool abtabelle = false;
+
+            bool increment = false, abessen = false;
+            List<string> gerichte = new List<string>();
+            gerichte.Add(string.Empty);
+
+            foreach (var item in els)
+            {
+                if (!abtabelle && item.Trim().Contains("<table style=\"border-collapse: collapse;\"")/*item.ToLower().Contains("montag")*/)
+                {
+                    abtabelle = true;
+                }
+                if (item.Contains("Alle Gerichte gerne auch zum Mitnehmen"))
+                {
+                    abtabelle = false;
+                }
+                if (abtabelle && gerichte.Count < 6)
+                {
+                    if (item.Contains("line-height: 150"))
+                    {
+                        abessen = true;
+                    }
+
+                    if (abessen && item.Contains("td"))
+                    {
+                        if (!increment)
+                        {
+                            increment = true;
+                        }
+                        else
+                        {
+                            gerichte.Add(String.Empty);
+                            increment = false;
+                        }
+                    }
+                    if (item.Contains("/span"))
+                    {
+                        string ausgabe = item.Split('<')[0];
+                        if (ausgabe != String.Empty)
+                        {
+                            gerichte[gerichte.Count - 1] += ausgabe + " ";
+                        }
+                    }
+                }
+            }
+            mvm.Speiseplan.Clear();
+            mvm.Speiseplan.Add(new Speise("Montag", gerichte[0]));
+            mvm.Speiseplan.Add(new Speise("Dienstag", gerichte[1]));
+            mvm.Speiseplan.Add(new Speise("Mittwoch", gerichte[2]));
+            mvm.Speiseplan.Add(new Speise("Donnerstag", gerichte[3]));
+        }
     }
 }

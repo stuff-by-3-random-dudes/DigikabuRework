@@ -85,7 +85,7 @@ namespace DigikabuRework.UI
                     Fenster.Text = "Digikabu - Schulaufgabenplan";
                     break;
                 case 4:
-                    
+                    load_frame.Content = new Frames.Speiseplan();
                     Fenster.Text = "Digikabu - Speiseplan";
                     break;
                 case 5:

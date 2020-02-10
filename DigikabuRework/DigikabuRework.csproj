@@ -74,10 +74,14 @@
     <Compile Include="Interfaces\ErrorThrower.cs" />
     <Compile Include="Klassen\SchuelerInfo.cs" />
     <Compile Include="Klassen\Schulstunden.cs" />
+    <Compile Include="Klassen\Speise.cs" />
     <Compile Include="Klassen\Stunde.cs" />
     <Compile Include="Klassen\StundenDauer.cs" />
     <Compile Include="Klassen\Termine.cs" />
     <Compile Include="Models\BaseModel.cs" />
+    <Compile Include="UI\Frames\Speiseplan.xaml.cs">
+      <DependentUpon>Speiseplan.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Frames\Tagesplan+Termine.xaml.cs">
       <DependentUpon>Tagesplan+Termine.xaml</DependentUpon>
     </Compile>
@@ -90,6 +94,10 @@
     <Compile Include="UI\TimerWindow.xaml.cs">
       <DependentUpon>TimerWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="UI\Frames\Speiseplan.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\Frames\Tagesplan+Termine.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

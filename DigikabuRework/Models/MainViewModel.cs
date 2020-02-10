@@ -28,6 +28,16 @@ namespace DigikabuRework
                 ZeitBisNaechsteStundeAsString = GetTimerAsString();
             }
         }
+        private List<Speise> speiseplan = new List<Speise>();
+
+        public List<Speise> Speiseplan
+        {
+            get { return speiseplan; }
+            set { speiseplan = value;
+                onPropertyChanged();
+            }
+        }
+
         private string zeitBisNaechsteStundeAsString = "vor Unterrichtsbeginn";
         public string ZeitBisNaechsteStundeAsString
         {
@@ -84,7 +94,7 @@ namespace DigikabuRework
             UserName = Settings.Default.UserName;
             KeepData = Settings.Default.keepData;
             Connection = new DigiCon(this);
-
+            GetSpeiseplan();
         }
 
         [STAThread]
@@ -130,7 +140,7 @@ namespace DigikabuRework
             mw.Show();
         }
         [STAThread]
-        public async Task getStundenUndTermine()
+        public async Task GetStundenUndTermine()
         {
             stundenplan.Clear();
             terminplan.Clear();
@@ -150,6 +160,10 @@ namespace DigikabuRework
             }
             ret += $"{ZeitBisNaechsteStunde.Seconds} Sekunden verbleibend";
             return ret;
+        }
+        public async Task GetSpeiseplan()
+        {
+            await Connection.GetSpeiseplan();
         }
     }
 }
