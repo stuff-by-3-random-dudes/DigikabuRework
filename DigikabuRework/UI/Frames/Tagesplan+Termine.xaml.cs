@@ -24,7 +24,7 @@ namespace DigikabuRework.UI.Frames
         MainViewModel mvm;
 
         private System.Windows.Threading.DispatcherTimer dispatcherTimer = null;
-
+        
         public Tagesplan_Termine()
         {
             mvm = (MainViewModel)FindResource("mvm");
@@ -51,7 +51,7 @@ namespace DigikabuRework.UI.Frames
         {
             changeStunde();
         }
-
+       
         public async Task getStundenPlanUndTermine()
         {
            await mvm.getStundenUndTermine();

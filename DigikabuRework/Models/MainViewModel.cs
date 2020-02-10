@@ -87,12 +87,24 @@ namespace DigikabuRework
 
         }
 
-        
+        [STAThread]
         public async Task LoginAppStart(string pwd, object sender)
         {
+            if (KeepData)
+            {
+                Settings.Default.UserName = UserName;
+
+            }
+            else
+            {
+                Settings.Default.UserName = string.Empty;
+            }
+            Settings.Default.keepData = KeepData;
+            Settings.Default.Save();
             Password = pwd;
             await LoginAsync(sender);
         }
+        [STAThread]
         public async Task LoginAsync(object sender)
         {
             try
@@ -108,11 +120,16 @@ namespace DigikabuRework
            
 
         }
+        public async Task Logout()
+        {
+           await Connection.Logout();
+        }
         private void OpenMenu()
         {
             UI.MenuWindow mw = new UI.MenuWindow();
             mw.Show();
         }
+        [STAThread]
         public async Task getStundenUndTermine()
         {
             await Connection.getStundenUndTermine();

@@ -30,8 +30,7 @@ namespace DigikabuRework.Connection
                 {"UserName", mvm.UserName },
                 {"Password", mvm.Password }
             };
-            try
-            {
+            
                 FormUrlEncodedContent content = new FormUrlEncodedContent(values);
 
                 var response = await client.PostAsync("https://digikabu.de/Login/Proceed", content);
@@ -46,15 +45,16 @@ namespace DigikabuRework.Connection
                 {
                     throw new Exception("Der Account ist dem Digikabu nicht bekannt!");
                 }
+                else if(responseString.Contains("nicht erreichbar"))
+                {
+                    throw new Exception("Das Digikabu ist zurzeit nicht erreichbar!");
+                }
                 else
                 {
                     await GetUNKLAsync();
                 }
-            }
-            catch(Exception)
-            {
-                throw new Exception("Konnte keine Verbidnung zum Digikabu herstellen");
-            }
+            
+            
             
 
         }
@@ -365,6 +365,20 @@ namespace DigikabuRework.Connection
                
             }
            
+        }
+        public async Task Logout()
+        {
+            await relog();
+            try
+            {
+                var response = await client.GetAsync("https://digikabu.de/Logout");
+
+                var responseString = await response.Content.ReadAsStringAsync();
+            }
+            catch (Exception)
+            {
+
+            }
         }
     }
 }

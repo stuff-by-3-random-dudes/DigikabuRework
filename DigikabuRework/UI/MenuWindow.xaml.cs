@@ -105,12 +105,18 @@ namespace DigikabuRework.UI
 
         private void Window_Close(object sender, RoutedEventArgs e)
         {
+            Task.Run(() => mvm.Logout());
             this.Close();
         }
 
         public void ThrowErrorMessage(string msg)
         {
             MessageBox.Show(msg, "Es ist ein Fehler aufgetretten", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
         }
     }
 }

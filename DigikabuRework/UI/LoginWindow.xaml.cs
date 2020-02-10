@@ -33,7 +33,7 @@ namespace DigikabuRework
             if (e.ChangedButton == MouseButton.Left)
                 this.DragMove();
         }
-
+        
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 

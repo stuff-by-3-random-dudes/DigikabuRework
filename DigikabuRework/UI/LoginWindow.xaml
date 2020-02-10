@@ -37,10 +37,10 @@
             </StackPanel>
         </Grid>
         
-        <Button VerticalAlignment="Bottom" Margin="100,0,100,46" Width="150" Content="LOGIN" BorderBrush="#1d92c4" Background="#1d92c4" Click="Button_Click" />
+        <Button VerticalAlignment="Bottom" Margin="100,0,100,46" Width="150" Content="LOGIN" BorderBrush="#1d92c4" Background="#1d92c4" Click="Button_Click" IsDefault="True" />
         <TextBlock HorizontalAlignment="Left" Margin="328,8,0,0" TextWrapping="Wrap" Text="X" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
         <Button HorizontalAlignment="Left" Margin="324,7,0,0" VerticalAlignment="Top" Width="18" Background="{x:Null}" BorderBrush="{x:Null}" Height="25" />
-        <CheckBox x:Name="chkKeepLogin" Content="Username speichern" HorizontalAlignment="Left" Margin="109,337,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="chkKeepLogin" Content="Username speichern" HorizontalAlignment="Left" Margin="109,337,0,0" VerticalAlignment="Top" IsChecked="{Binding KeepData}"/>
 
     </Grid>
 </Window>
