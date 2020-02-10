@@ -24,7 +24,7 @@ namespace DigikabuRework
             set
             {
                 zeitBisNaechsteStunde = value;
-                onPropertyChanged();
+                OnPropertyChanged();
                 ZeitBisNaechsteStundeAsString = GetTimerAsString();
             }
         }
@@ -34,7 +34,7 @@ namespace DigikabuRework
         {
             get { return speiseplan; }
             set { speiseplan = value;
-                onPropertyChanged();
+                OnPropertyChanged();
             }
         }
 
@@ -48,7 +48,7 @@ namespace DigikabuRework
             set
             {
                 zeitBisNaechsteStundeAsString = value;
-                onPropertyChanged();
+                OnPropertyChanged();
             }
         }
         public string UserName { get; set; }
@@ -64,7 +64,7 @@ namespace DigikabuRework
         {
             get { return stundenplan; }
             set { stundenplan = value;
-                onPropertyChanged();
+                OnPropertyChanged();
             }
         }
         private List<Termine> terminplan = new List<Termine>();
@@ -76,7 +76,7 @@ namespace DigikabuRework
             set
             {
                 terminplan = value;
-                onPropertyChanged();
+                OnPropertyChanged();
             }
         }
 
@@ -144,7 +144,7 @@ namespace DigikabuRework
         {
             stundenplan.Clear();
             terminplan.Clear();
-            await Connection.getStundenUndTermine();
+            await Connection.GetStundenUndTermine();
         }
 
         public string GetTimerAsString()

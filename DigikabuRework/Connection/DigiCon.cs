@@ -61,7 +61,7 @@ namespace DigikabuRework.Connection
         }
         public async Task GetUNKLAsync()
         {
-            await relog();
+            await Relog();
             string retval = string.Empty;
             var response = await client.GetAsync("https://digikabu.de/Main");
 
@@ -75,7 +75,7 @@ namespace DigikabuRework.Connection
                     if (s.Contains(")</span"))
                     {
                         string[] split = s.Split(' ');
-                        retval = fix(split[0]) + " " + fix(split[1]);
+                        retval = Fix(split[0]) + " " + Fix(split[1]);
                         foreach (string st in split)
                         {
                             if (st.Contains('('))
@@ -95,7 +95,7 @@ namespace DigikabuRework.Connection
             var splitUNKL = retval.Split(';');
             mvm.Sinfo = new Klassen.SchuelerInfo(splitUNKL[0], splitUNKL[1]);
         }
-        static string fix(string toFix)
+        static string Fix(string toFix)
         {
             string ret = string.Empty;
             if (toFix.Contains("&#x"))
@@ -112,13 +112,13 @@ namespace DigikabuRework.Connection
             }
             return ret;
         }
-        public async Task getStundenUndTermine()
+        public async Task GetStundenUndTermine()
         {     
             try
             {
-                await relog();
-                mvm.Terminplan = await getTermine();
-                mvm.Stundenplan = await getStunden();
+                await Relog();
+                mvm.Terminplan = await GetTermine();
+                mvm.Stundenplan = await GetStunden();
             }
             catch (Exception)
             {
@@ -126,12 +126,12 @@ namespace DigikabuRework.Connection
             }
            
         }
-        public async Task<List<Stunde>> getStunden()
+        public async Task<List<Stunde>> GetStunden()
         {
             List<Stunde> ret = new List<Stunde>();
             try
             {
-                await relog();
+                await Relog();
                 var response = await client.GetAsync("https://digikabu.de/Main");
                 var responsestring = await response.Content.ReadAsStringAsync();
                 var splitfach1 = new string[] { };
@@ -308,7 +308,7 @@ namespace DigikabuRework.Connection
             }
             return newret;
         }
-        public async Task<List<Termine>> getTermine()
+        public async Task<List<Termine>> GetTermine()
         {
             List<Termine> ret = new List<Termine>();
             var response = await client.GetAsync("https://digikabu.de/Main");
@@ -326,7 +326,7 @@ namespace DigikabuRework.Connection
                     if (trim.Contains("white-space"))
                     {
                         var x = trim.Split('>');
-                        info[0] = fix(x[1]);
+                        info[0] = Fix(x[1]);
                         nextIsIgnore = true;
                     }
                     else if (nextIsIgnore)
@@ -338,7 +338,7 @@ namespace DigikabuRework.Connection
                     {
                         var x = trim.Split('>');
                         nextIsMessage = false;
-                        info[1] = fix(x[1]);
+                        info[1] = Fix(x[1]);
                         var dat = string.Empty;
                         
                         if (info[0].Contains(' '))
@@ -376,7 +376,7 @@ namespace DigikabuRework.Connection
             }
             return ret;
         }
-        private async Task relog()
+        private async Task Relog()
         {
             var values = new Dictionary<string, string>
             {
@@ -399,7 +399,7 @@ namespace DigikabuRework.Connection
         }
         public async Task Logout()
         {
-            await relog();
+            await Relog();
             try
             {
                 var response = await client.GetAsync("https://digikabu.de/Logout");

@@ -28,7 +28,7 @@ namespace DigikabuRework.UI.Frames
         public Tagesplan_Termine()
         {
             mvm = (MainViewModel)FindResource("mvm");
-            getStundenPlanUndTermine();
+            GetStundenPlanUndTermine();
             SetupTimer();
             InitializeComponent();
             
@@ -40,24 +40,23 @@ namespace DigikabuRework.UI.Frames
             {
                 
                 dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-                dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
+                dispatcherTimer.Tick += new EventHandler(Stundentimer_Tick);
                 dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
                 Console.WriteLine("Setup Timer");
             }
             
         }
 
-        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        private void Stundentimer_Tick(object sender, EventArgs e)
         {
-            changeStunde();
+            ChangeStunde();
         }
        
-        public async Task getStundenPlanUndTermine()
+        public async Task GetStundenPlanUndTermine()
         {
            await mvm.GetStundenUndTermine();
-            
         }
-        public void changeStunde()
+        public void ChangeStunde()
         {
             bool zeitGesetzt = false;
             foreach (Stunde item in SP.ItemsSource)
@@ -104,12 +103,10 @@ namespace DigikabuRework.UI.Frames
         {
             dispatcherTimer.Stop();
             dispatcherTimer = null;
-
         }
 
         private void Page_Initialized(object sender, EventArgs e)
         {
-            //SetupTimer();
             dispatcherTimer.Start();
         }
     }

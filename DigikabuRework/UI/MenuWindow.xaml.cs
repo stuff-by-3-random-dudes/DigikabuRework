@@ -72,17 +72,13 @@ namespace DigikabuRework.UI
                 case 1:
                     TimerWindow tw = new TimerWindow();
                     tw.Show();
-                   
                     goto case 8;
-     
                 case 0:
-                    
                     load_frame.Content = new Frames.Tagesplan_Termine();
-                   
                     Fenster.Text = "Digikabu - Termine";
                     break;
                 case 2:
-                    
+
                     Fenster.Text = "Digikabu - Wochenstundenplan";
                     break;
                 case 3:
@@ -123,7 +119,7 @@ namespace DigikabuRework.UI
             MessageBox.Show(msg, "Es ist ein Fehler aufgetretten", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Window_Minimize(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
         }
