@@ -45,10 +45,10 @@ namespace DigikabuRework.Klassen
                 Fach = fach;
             }
            
-            setStundenDauer();
+            SetStundenDauer();
         }
 
-        private void setStundenDauer()
+        private void SetStundenDauer()
         {
             //Std = StundenDauer.StundenDauerListe[(int)stn];
             foreach (var item in StundenDauer.StundenDauerListe)

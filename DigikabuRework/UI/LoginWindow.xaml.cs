@@ -34,11 +34,9 @@ namespace DigikabuRework
                 this.DragMove();
         }
         
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Login_Click(object sender, RoutedEventArgs e)
         {
-
            Login(sender);
-            
         }
 
         public void ThrowErrorMessage(string msg)

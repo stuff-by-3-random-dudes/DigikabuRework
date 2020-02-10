@@ -14,7 +14,7 @@ namespace DigikabuRework
 
         // OnPropertyChanged will raise the PropertyChanged event passing the
         // source property that is being updated.
-        protected void onPropertyChanged([CallerMemberName]string propertyName = "")
+        protected void OnPropertyChanged([CallerMemberName]string propertyName = "")
         {
             if (this.PropertyChanged != null)
             {
