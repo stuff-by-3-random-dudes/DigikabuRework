@@ -64,6 +64,7 @@ namespace DigikabuRework.UI
             {
                 case 0:
                     load_frame.Content = new Frames.Tagesplan_Termine();
+                   
                     Fenster.Text = "Digikabu - Termine";
                     break;
                 case 1:
