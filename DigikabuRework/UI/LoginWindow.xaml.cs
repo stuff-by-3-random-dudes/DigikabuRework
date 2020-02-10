@@ -34,11 +34,9 @@ namespace DigikabuRework
                 this.DragMove();
         }
 
-        private async Task Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-
-           await Login();
-            
+           Login();
         }
 
         public void ThrowErrorMessage(string msg)

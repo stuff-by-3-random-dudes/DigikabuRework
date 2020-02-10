@@ -89,6 +89,13 @@
                             <TextBlock Text="Termine" VerticalAlignment="Center" Margin="20 10"/>
                         </StackPanel>
                     </ListViewItem>
+                    <!--Timer-->
+                    <ListViewItem Height="60" x:Name="Timer">
+                        <StackPanel Orientation="Horizontal" >
+                            <materialDesign:PackIcon  Margin="10" Kind="Timer" Width="25" Height="25" VerticalAlignment="Center"/>
+                            <TextBlock Text="Timer" VerticalAlignment="Center" Margin="20 10"/>
+                        </StackPanel>
+                    </ListViewItem>
                     <!--Wochenstundenplan-->
                     <ListViewItem Height="60" x:Name="Wochenstundenplan">
                         <StackPanel Orientation="Horizontal" >
@@ -131,6 +138,7 @@
                             <TextBlock Text="Einstellungen" VerticalAlignment="Center" Margin="20 10"/>
                         </StackPanel>
                     </ListViewItem>
+                    
 
                 </ListView>
 
