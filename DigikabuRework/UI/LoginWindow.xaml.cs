@@ -37,7 +37,7 @@ namespace DigikabuRework
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
-           Login();
+           Login(sender);
             
         }
 
@@ -45,16 +45,17 @@ namespace DigikabuRework
         {
             MessageBox.Show(msg, "Es ist ein Fehler aufgetretten", MessageBoxButton.OK, MessageBoxImage.Error);
         }
-        private async Task Login()
+        private async Task Login(object sender)
         {
             try
             {
+                (sender as Button).IsEnabled = false;
                 await mvm.LoginAppStart(PW.Password, this);
                 this.Close();
             }
             catch (Exception)
             {
-                
+                (sender as Button).IsEnabled = true;
             }
         }
 
