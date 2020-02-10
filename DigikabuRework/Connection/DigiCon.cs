@@ -131,7 +131,7 @@ namespace DigikabuRework.Connection
             try
             {
                 await relog();
-                var response = await client.GetAsync("https://digikabu.de/Main?date=2020-02-12");
+                var response = await client.GetAsync("https://digikabu.de/Main");
                 var responsestring = await response.Content.ReadAsStringAsync();
                 var splitfach1 = new string[] { };
                 int fach2 = 0;

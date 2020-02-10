@@ -5,9 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DigikabuRework.UI"
         mc:Ignorable="d"
-        Title="TimerWindow" Height="122.841" Width="205.85">
+        Title="TimerWindow" Height="193.194" Width="241.624" WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" MouseDown="MoveWindow" Background="LightGray">
     <Grid DataContext="{StaticResource mvm}">
-        <TextBlock Text="{Binding ZeitBisNaechsteStundeAsString}">
-        </TextBlock>
+        <Rectangle HorizontalAlignment="Left" Height="36" VerticalAlignment="Top" Width="312">
+            <Rectangle.Fill>
+                <LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1">
+                    <GradientStop Color="#2b27a3" Offset="0"/>
+                    <GradientStop Color="#2f42bd" Offset="1"/>
+                    <GradientStop Color="#2b27a3" Offset="0.5"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Label Content="Zeit bis Stundenwechsel" HorizontalAlignment="Left" Margin="3,2,0,0" VerticalAlignment="Top" FontSize="18" Foreground="White"/>
+        <TextBlock HorizontalAlignment="Left" Margin="226,3,0,0" TextWrapping="Wrap" Text="X" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="222,2,0,0" VerticalAlignment="Top" Width="18" Background="{x:Null}" BorderBrush="{x:Null}" Height="25" Click="Window_Close"/>
+        <Label Content="{Binding ZeitBisNaechsteStundeAsString}" Margin="0,36,0,0" FontSize="16" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
     </Grid>
 </Window>
