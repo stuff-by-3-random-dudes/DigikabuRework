@@ -340,6 +340,7 @@ namespace DigikabuRework.Connection
                         nextIsMessage = false;
                         info[1] = fix(x[1]);
                         var dat = string.Empty;
+                        
                         if (info[0].Contains(' '))
                         {
                             dat = info[0].Split(' ')[0];
@@ -348,8 +349,22 @@ namespace DigikabuRework.Connection
                         {
                             dat = info[0];
                         }
-                        var splitdat = dat.Split('.');
-                        var retdat = $"{splitdat[1]}.{splitdat[0]}.{splitdat[2]}";
+                        var retdat = string.Empty;
+                        if (CultureInfo.CurrentCulture.Name.Contains("en"))
+                        {
+                            var splitdat = dat.Split('.');
+                            retdat = $"{splitdat[1]}.{splitdat[0]}.{splitdat[2]}";
+                        }
+                        else if(CultureInfo.CurrentCulture.Name == "de-DE")
+                        {
+                            retdat = dat;
+                        }
+                        else
+                        {
+                            retdat = DateTime.Now.ToString();
+                        }
+                        
+
                         CultureInfo ci = new CultureInfo("de-DE");
                         // Get the DateTimeFormatInfo for the en-US culture.
                         DateTimeFormatInfo dtfi = ci.DateTimeFormat;
