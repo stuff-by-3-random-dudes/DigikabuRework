@@ -78,7 +78,7 @@ namespace DigikabuRework.UI
                     Fenster.Text = "Digikabu - Termine";
                     break;
                 case 2:
-
+                    load_frame.Content = new Frames.WochenStundenPlan();
                     Fenster.Text = "Digikabu - Wochenstundenplan";
                     break;
                 case 3:

@@ -30,6 +30,8 @@ namespace DigikabuRework
         }
         private List<Speise> speiseplan = new List<Speise>();
 
+        
+
         public List<Speise> Speiseplan
         {
             get { return speiseplan; }
@@ -81,7 +83,7 @@ namespace DigikabuRework
         }
 
 
-       
+        public WochenStundenPlan WSP { get; set; } = new WochenStundenPlan();
 
         private DigiCon Connection;
 
@@ -140,11 +142,12 @@ namespace DigikabuRework
             mw.Show();
         }
         
-        public async Task GetStundenUndTermine()
+        public async Task GetStundenUndTermine(DateTime t)
         {
             stundenplan.Clear();
             terminplan.Clear();
-            await Connection.GetStundenUndTermine();
+            await Connection.GetStundenUndTermine(t);
+           
         }
 
         public string GetTimerAsString()
@@ -164,6 +167,68 @@ namespace DigikabuRework
         public async Task GetSpeiseplan()
         {
             await Connection.GetSpeiseplan();
+        }
+        public async Task GetWochenSP(bool nextWeek)
+        {
+            ClearWSP();
+            DateTime start = StartingDateOfWeek(DateTime.Now);
+            
+            if (nextWeek)
+            {
+                start = start.AddDays(7);
+            }
+            WSP.Start = start;
+            WSP.End = start.AddDays(6);
+            WSP.Montag = await GetStundenplanOfDay(start);
+            WSP.Dienstag = await GetStundenplanOfDay(start.AddDays(1));
+            WSP.Mittwoch = await GetStundenplanOfDay(start.AddDays(2));
+            WSP.Donnerstag = await GetStundenplanOfDay(start.AddDays(3));
+            WSP.Freitag = await GetStundenplanOfDay(start.AddDays(4));
+        }
+        private void ClearWSP()
+        {
+            WSP.Montag.Clear();
+            WSP.Dienstag.Clear();
+            WSP.Mittwoch.Clear();
+            WSP.Donnerstag.Clear();
+            WSP.Freitag.Clear();
+        }
+        public async Task<List<Stunde>> GetStundenplanOfDay(DateTime t)
+        {
+            return await Connection.GetStunden(t);
+        }
+        private DateTime StartingDateOfWeek(DateTime date)
+        {
+            DateTime usedDate;
+            int dateAdjustment = 0;
+            switch (date.DayOfWeek)
+            {
+                case DayOfWeek.Sunday:
+                    dateAdjustment = 1;
+                    break;
+                case DayOfWeek.Monday:
+                    dateAdjustment = 0;
+                    break;
+                case DayOfWeek.Tuesday:
+                    dateAdjustment = -1;
+                    break;
+                case DayOfWeek.Wednesday:
+                    dateAdjustment = -2;
+                    break;
+                case DayOfWeek.Thursday:
+                    dateAdjustment = -3;
+                    break;
+                case DayOfWeek.Friday:
+                    dateAdjustment = -4;
+                    break;
+                case DayOfWeek.Saturday:
+                    dateAdjustment = 2;
+                    break;
+                default:
+                    break;
+            }
+            usedDate = date.AddDays(Convert.ToDouble(dateAdjustment));
+            return usedDate;
         }
     }
 }

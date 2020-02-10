@@ -54,7 +54,7 @@ namespace DigikabuRework.UI.Frames
        
         public async Task GetStundenPlanUndTermine()
         {
-           await mvm.GetStundenUndTermine();
+           await mvm.GetStundenUndTermine(DateTime.Now);
         }
         public void ChangeStunde()
         {

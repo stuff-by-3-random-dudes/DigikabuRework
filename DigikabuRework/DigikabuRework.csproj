@@ -72,18 +72,23 @@
     </ApplicationDefinition>
     <Compile Include="Connection\DigiCon.cs" />
     <Compile Include="Interfaces\ErrorThrower.cs" />
+    <Compile Include="Klassen\Consts.cs" />
     <Compile Include="Klassen\SchuelerInfo.cs" />
     <Compile Include="Klassen\Schulstunden.cs" />
     <Compile Include="Klassen\Speise.cs" />
     <Compile Include="Klassen\Stunde.cs" />
     <Compile Include="Klassen\StundenDauer.cs" />
     <Compile Include="Klassen\Termine.cs" />
+    <Compile Include="Klassen\WochenStundenPlan1.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="UI\Frames\Speiseplan.xaml.cs">
       <DependentUpon>Speiseplan.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Frames\Tagesplan+Termine.xaml.cs">
       <DependentUpon>Tagesplan+Termine.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Frames\WochenStundenPlan.xaml.cs">
+      <DependentUpon>WochenStundenPlan.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\MenuWindow.xaml.cs">
       <DependentUpon>MenuWindow.xaml</DependentUpon>
@@ -99,6 +104,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\Frames\Tagesplan+Termine.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Frames\WochenStundenPlan.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

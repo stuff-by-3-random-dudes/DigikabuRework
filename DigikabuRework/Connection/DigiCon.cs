@@ -112,13 +112,13 @@ namespace DigikabuRework.Connection
             }
             return ret;
         }
-        public async Task GetStundenUndTermine()
+        public async Task GetStundenUndTermine(DateTime t)
         {     
             try
             {
                 await Relog();
                 mvm.Terminplan = await GetTermine();
-                mvm.Stundenplan = await GetStunden();
+                mvm.Stundenplan = await GetStunden(t);
             }
             catch (Exception)
             {
@@ -126,13 +126,14 @@ namespace DigikabuRework.Connection
             }
            
         }
-        public async Task<List<Stunde>> GetStunden()
+        public async Task<List<Stunde>> GetStunden(DateTime tag)
         {
             List<Stunde> ret = new List<Stunde>();
             try
             {
                 await Relog();
-                var response = await client.GetAsync("https://digikabu.de/Main");
+                string contag = tag.ToString("yyyy-MM-dd");
+                var response = await client.GetAsync("https://digikabu.de/Main?date="+contag);
                 var responsestring = await response.Content.ReadAsStringAsync();
                 var splitfach1 = new string[] { };
                 int fach2 = 0;
@@ -469,5 +470,6 @@ namespace DigikabuRework.Connection
             mvm.Speiseplan.Add(new Speise("Mittwoch", gerichte[2]));
             mvm.Speiseplan.Add(new Speise("Donnerstag", gerichte[3]));
         }
+       
     }
 }
