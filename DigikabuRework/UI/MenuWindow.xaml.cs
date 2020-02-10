@@ -21,6 +21,7 @@ namespace DigikabuRework.UI
     public partial class MenuWindow : Window, ErrorThrower
     {
         MainViewModel mvm;
+        int selectedIndex;
         public MenuWindow()
         {
             InitializeComponent();
@@ -60,7 +61,11 @@ namespace DigikabuRework.UI
         private void ListView_Click(object sender, MouseButtonEventArgs e)
         {
             if((sender as ListView).SelectedIndex != 1)
-            DestroyFrame();
+            {
+                DestroyFrame();
+                selectedIndex = (sender as ListView).SelectedIndex;
+            }
+
             
             switch ((sender as ListView).SelectedIndex)
             {
@@ -101,7 +106,7 @@ namespace DigikabuRework.UI
                     Fenster.Text = "Digikabu - Einstellungen";
                     break;
                 case 8:
-                    (sender as ListView).SelectedIndex = 0;
+                    (sender as ListView).SelectedIndex = selectedIndex;
                     Console.WriteLine((sender as ListView).SelectedIndex);
                     break;
             }
