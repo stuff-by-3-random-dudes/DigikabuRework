@@ -132,6 +132,8 @@ namespace DigikabuRework
         [STAThread]
         public async Task getStundenUndTermine()
         {
+            stundenplan.Clear();
+            terminplan.Clear();
             await Connection.getStundenUndTermine();
         }
 
