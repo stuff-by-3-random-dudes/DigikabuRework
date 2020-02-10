@@ -60,13 +60,21 @@ namespace DigikabuRework.UI
         private void ListView_Click(object sender, MouseButtonEventArgs e)
         {
             DestroyFrame();
+            
             switch ((sender as ListView).SelectedIndex)
             {
-                case 0:
-                    load_frame.Content = new Frames.Tagesplan_Termine();
-                    Fenster.Text = "Digikabu - Termine";
-                    break;
                 case 1:
+                    TimerWindow tw = new TimerWindow();
+                    tw.Show();
+                   
+                    goto case 0;
+     
+                case 0:
+                    
+                    load_frame.Content = new Frames.Tagesplan_Termine();
+                    (sender as ListView).SelectedIndex = 0;
+                    Console.WriteLine((sender as ListView).SelectedIndex);
+                    Fenster.Text = "Digikabu - Termine";
                     break;
                 case 2:
                     
