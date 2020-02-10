@@ -22,13 +22,36 @@ namespace DigikabuRework.UI.Frames
     public partial class Tagesplan_Termine : Page
     {
         MainViewModel mvm;
+        private static System.Windows.Threading.DispatcherTimer dispatcherTimer = null;
         public Tagesplan_Termine()
         {
             mvm = (MainViewModel)FindResource("mvm");
-            getStundenPlanUndTermine();
+            getStundenPlanUndTermine(); // vllt auch kein await
             InitializeComponent();
-            
+            SetupTimer();
         }
+
+        private void SetupTimer()
+        {
+            if (dispatcherTimer == null)
+            {
+                dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+                dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
+                dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+                
+                
+            }
+            dispatcherTimer.Start();
+        }
+
+        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            
+                changeStunde();
+           
+           
+        }
+
         public async Task getStundenPlanUndTermine()
         {
            await mvm.getStundenUndTermine();
@@ -36,25 +59,16 @@ namespace DigikabuRework.UI.Frames
         public void changeStunde()
         {
             foreach (Stunde item in SP.ItemsSource)
-
             {
-
                 var row = SP.ItemContainerGenerator.ContainerFromItem(item) as DataGridRow;
-
-                if (item.Schulstunde == "1")
-
+                if (item.Std.AktuelleStunde() && row != null)//item.Schulstunde == "1"
                 {
-
                     row.Background = Brushes.DarkGray;
-
                 }
-                else
+                else if(row != null)
                 {
-
                     row.Background = this.Background;
-
                 }
-
             }
         }
 

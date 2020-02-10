@@ -58,8 +58,8 @@ namespace DigikabuRework
             KeepData = Settings.Default.keepData;
             Connection = new DigiCon(this);
 
-
         }
+
         
         public async Task LoginAppStart(string pwd, object sender)
         {
