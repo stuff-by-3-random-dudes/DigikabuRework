@@ -38,7 +38,8 @@ namespace DigikabuRework.UI.Frames
             if(mvm.SelStunde != null)
             {
                 StundenInfo si = new StundenInfo();
-                si.Show();
+                si.ShowDialog();
+                
             }
         }
 
