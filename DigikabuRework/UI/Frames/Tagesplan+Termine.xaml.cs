@@ -38,18 +38,13 @@ namespace DigikabuRework.UI.Frames
                 dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
                 dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
                 dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
-                
-                
             }
             dispatcherTimer.Start();
         }
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-            
-                changeStunde();
-           
-           
+            changeStunde();
         }
 
         public async Task getStundenPlanUndTermine()
@@ -61,9 +56,13 @@ namespace DigikabuRework.UI.Frames
             foreach (Stunde item in SP.ItemsSource)
             {
                 var row = SP.ItemContainerGenerator.ContainerFromItem(item) as DataGridRow;
-                if (item.Std.AktuelleStunde() && row != null)//item.Schulstunde == "1"
+                if (item.Std.AktuelleStunde())//item.Schulstunde == "1"
                 {
-                    row.Background = Brushes.DarkGray;
+                    if (row != null)
+                    {
+                        row.Background = Brushes.DarkGray;
+                    }
+                    mvm.ZeitBisNaechsteStunde = item.Std.Ende.Subtract(DateTime.Now);
                 }
                 else if(row != null)
                 {
