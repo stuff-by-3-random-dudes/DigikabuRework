@@ -8,10 +8,12 @@ namespace DigikabuRework.Klassen
 {
     class Termine
     {
+        public string WochenTag { get; set; }
         public string Tag { get; set; }
         public string Termin { get; set; }
-        public Termine(string t, string te)
+        public Termine(string d, string t, string te)
         {
+            WochenTag = d;
             Tag = t;
             Termin = te;
         }

@@ -1,6 +1,7 @@
 ﻿using DigikabuRework.Klassen;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -338,7 +339,22 @@ namespace DigikabuRework.Connection
                         var x = trim.Split('>');
                         nextIsMessage = false;
                         info[1] = fix(x[1]);
-                        ret.Add(new Klassen.Termine(info[0], info[1]));
+                        var dat = string.Empty;
+                        if (info[0].Contains(' '))
+                        {
+                            dat = info[0].Split(' ')[0];
+                        }
+                        else
+                        {
+                            dat = info[0];
+                        }
+                        var splitdat = dat.Split('.');
+                        var retdat = $"{splitdat[1]}.{splitdat[0]}.{splitdat[2]}";
+                        CultureInfo ci = new CultureInfo("de-DE");
+                        // Get the DateTimeFormatInfo for the en-US culture.
+                        DateTimeFormatInfo dtfi = ci.DateTimeFormat;
+                        DayOfWeek dow= Convert.ToDateTime(retdat).DayOfWeek;
+                        ret.Add(new Klassen.Termine(dtfi.GetShortestDayName(dow), info[0], info[1]));
 
                     }
                 }

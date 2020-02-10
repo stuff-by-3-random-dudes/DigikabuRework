@@ -18,10 +18,11 @@
                 <DataGridTextColumn Header="Fach" Binding="{Binding Fach}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <TextBlock HorizontalAlignment="Left" Margin="646,27,0,0" TextWrapping="Wrap" Text="Termine" VerticalAlignment="Top" FontSize="25" Width="144"/>
-        <DataGrid HorizontalAlignment="Left" Height="395" Margin="646,65,0,0" VerticalAlignment="Top" Width="448" Background="LightGray" ItemsSource="{Binding Terminplan}" SelectionMode="Single" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" CanUserResizeColumns="False" CanUserResizeRows="False">
+        <TextBlock HorizontalAlignment="Left" Margin="545,27,0,0" TextWrapping="Wrap" Text="Termine" VerticalAlignment="Top" FontSize="25" Width="144"/>
+        <DataGrid HorizontalAlignment="Left" Height="395" Margin="545,65,0,0" VerticalAlignment="Top" Width="549" Background="LightGray" ItemsSource="{Binding Terminplan}" SelectionMode="Single" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" CanUserResizeColumns="False" CanUserResizeRows="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Tag" Binding="{Binding Tag}"/>
+                <DataGridTextColumn Header="Tag" Binding="{Binding WochenTag}"/>
+                <DataGridTextColumn Header="Datum" Binding="{Binding Tag}"/>
                 <DataGridTextColumn Header="Termin" Binding="{Binding Termin}"/>
             </DataGrid.Columns>
         </DataGrid>
