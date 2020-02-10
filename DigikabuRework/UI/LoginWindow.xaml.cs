@@ -54,8 +54,13 @@ namespace DigikabuRework
             }
             catch (Exception)
             {
-
+                
             }
+        }
+
+        private void Button_Close(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }
