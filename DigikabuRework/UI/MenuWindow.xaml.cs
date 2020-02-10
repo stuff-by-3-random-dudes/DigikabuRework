@@ -38,8 +38,16 @@ namespace DigikabuRework.UI
         }
         private void MoveWindow(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
-                this.DragMove();
+            try
+            {
+                if (e.ChangedButton == MouseButton.Left)
+                    this.DragMove();
+            }
+            catch (Exception)
+            {
+
+            }
+            
         }
 
         private void ListView_Click(object sender, MouseButtonEventArgs e)

@@ -81,6 +81,9 @@
     <Compile Include="UI\MenuWindow.xaml.cs">
       <DependentUpon>MenuWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\StundenInfo.xaml.cs">
+      <DependentUpon>StundenInfo.xaml</DependentUpon>
+    </Compile>
     <Page Include="UI\Frames\Tagesplan+Termine.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -99,6 +102,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="UI\MenuWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\StundenInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

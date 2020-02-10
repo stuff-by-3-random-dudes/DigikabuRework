@@ -11,7 +11,7 @@
 
     <Grid DataContext="{StaticResource mvm}">
         <TextBlock HorizontalAlignment="Left" Margin="32,27,0,0" TextWrapping="Wrap" Text="Stundenplan" VerticalAlignment="Top" FontSize="25"/>
-        <DataGrid x:Name="SP" HorizontalAlignment="Left" Height="395" Margin="32,65,0,0" VerticalAlignment="Top" Width="452" Background="LightGray" ItemsSource="{Binding Stundenplan}" SelectionMode="Single" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" CanUserResizeColumns="False" CanUserResizeRows="False" SelectedItem="{Binding SelStunde}">
+        <DataGrid x:Name="SP" HorizontalAlignment="Left" Height="395" Margin="32,65,0,0" VerticalAlignment="Top" Width="452" Background="LightGray" ItemsSource="{Binding Stundenplan}" SelectionMode="Single" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" CanUserResizeColumns="False" CanUserResizeRows="False" SelectedItem="{Binding SelStunde}" MouseDoubleClick="SP_MouseDoubleClick">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Stunde" Binding="{Binding Schulstunde}"/>
                 <DataGridTextColumn Header="Von - Bis" Binding="{Binding Std}"/>

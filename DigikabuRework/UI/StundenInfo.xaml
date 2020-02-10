@@ -1,0 +1,15 @@
+﻿<Window x:Class="DigikabuRework.UI.StundenInfo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DigikabuRework.UI"
+        mc:Ignorable="d"
+        Title="StundenInfo" Height="135.245" Width="318.033">
+    <Grid DataContext="{StaticResource mvm}">
+        <Label Content="{Binding SelStunde.Fach}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Label Content="{Binding SelStunde.Lehrer}" HorizontalAlignment="Left" Margin="10,39,0,0" VerticalAlignment="Top"/>
+        <Label Content="{Binding SelStunde.Klassenzimmer}" HorizontalAlignment="Left" Margin="10,68,0,0" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>
