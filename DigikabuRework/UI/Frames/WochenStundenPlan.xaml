@@ -10,27 +10,27 @@
       Title="WochenStundenPlan">
 
     <Grid DataContext="{StaticResource mvm}">
-        <DataGrid ItemsSource="{Binding WSP.Montag}" SelectedItem="{Binding SelStunde}" HorizontalAlignment="Left" Height="380" Margin="76,75,0,0" VerticalAlignment="Top" Width="161" Background="LightGray" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" IsReadOnly="True" MouseDoubleClick="DataGrid_MouseDoubleClick">
+        <DataGrid ItemsSource="{Binding WochenStdPlan.Montag}" SelectedItem="{Binding SelStunde}" HorizontalAlignment="Left" Height="380" Margin="76,75,0,0" VerticalAlignment="Top" Width="161" Background="LightGray" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" IsReadOnly="True" MouseDoubleClick="DataGrid_MouseDoubleClick">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Montag" Binding="{Binding Fach}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid ItemsSource="{Binding WSP.Dienstag}" SelectedItem="{Binding SelStunde}" HorizontalAlignment="Left" Height="380" Margin="276,75,0,0" VerticalAlignment="Top" Width="161" Background="LightGray" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" IsReadOnly="True" MouseDoubleClick="DataGrid_MouseDoubleClick">
+        <DataGrid ItemsSource="{Binding WochenStdPlan.Dienstag}" SelectedItem="{Binding SelStunde}" HorizontalAlignment="Left" Height="380" Margin="276,75,0,0" VerticalAlignment="Top" Width="161" Background="LightGray" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" IsReadOnly="True" MouseDoubleClick="DataGrid_MouseDoubleClick">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Dienstag" Binding="{Binding Fach}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid ItemsSource="{Binding WSP.Mittwoch}" SelectedItem="{Binding SelStunde}" HorizontalAlignment="Left" Height="380" Margin="476,75,0,0" VerticalAlignment="Top" Width="161" Background="LightGray" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" IsReadOnly="True" MouseDoubleClick="DataGrid_MouseDoubleClick">
+        <DataGrid ItemsSource="{Binding WochenStdPlan.Mittwoch}" SelectedItem="{Binding SelStunde}" HorizontalAlignment="Left" Height="380" Margin="476,75,0,0" VerticalAlignment="Top" Width="161" Background="LightGray" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" IsReadOnly="True" MouseDoubleClick="DataGrid_MouseDoubleClick">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Mittwoch" Binding="{Binding Fach}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid ItemsSource="{Binding WSP.Donnerstag}" SelectedItem="{Binding SelStunde}" HorizontalAlignment="Left" Height="380" Margin="676,75,0,0" VerticalAlignment="Top" Width="161" Background="LightGray" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" IsReadOnly="True" MouseDoubleClick="DataGrid_MouseDoubleClick">
+        <DataGrid ItemsSource="{Binding WochenStdPlan.Donnerstag}" SelectedItem="{Binding SelStunde}" HorizontalAlignment="Left" Height="380" Margin="676,75,0,0" VerticalAlignment="Top" Width="161" Background="LightGray" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" IsReadOnly="True" MouseDoubleClick="DataGrid_MouseDoubleClick">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Donnerstag" Binding="{Binding Fach}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid ItemsSource="{Binding WSP.Freitag}" SelectedItem="{Binding SelStunde}" HorizontalAlignment="Left" Height="380" Margin="876,75,0,0" VerticalAlignment="Top" Width="161" Background="LightGray" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" IsReadOnly="True" MouseDoubleClick="DataGrid_MouseDoubleClick">
+        <DataGrid ItemsSource="{Binding WochenStdPlan.Freitag}" SelectedItem="{Binding SelStunde}" HorizontalAlignment="Left" Height="380" Margin="876,75,0,0" VerticalAlignment="Top" Width="161" Background="LightGray" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" IsReadOnly="True" MouseDoubleClick="DataGrid_MouseDoubleClick">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Freitag" Binding="{Binding Fach}"/>
             </DataGrid.Columns>
@@ -38,8 +38,8 @@
         <Label Name="Left" Content="←" HorizontalAlignment="Left" Margin="22,10,0,0" VerticalAlignment="Top" FontSize="35" MouseDown="Left_MouseDown"  IsEnabled="False" Cursor="Hand"/>
         <Label Name="Right" Content="→" HorizontalAlignment="Left" Margin="1052,10,0,0" VerticalAlignment="Top" FontSize="35" MouseDown="Right_MouseDown" IsEnabled="True" Cursor="Hand"/>
         <Label Content="Wochenstundenplan von" HorizontalAlignment="Left" Margin="192,21,0,0" VerticalAlignment="Top" FontSize="25"/>
-        <TextBlock Text="{Binding Path=WSP.Start, StringFormat={x:Static local:Consts.DateTimeUiFormat}}" HorizontalAlignment="Left" Margin="490,25,0,0" VerticalAlignment="Top" FontSize="25"/>
+        <TextBlock Text="{Binding Path=WochenStdPlan.Start, StringFormat={x:Static local:Consts.DateTimeUiFormat}}" HorizontalAlignment="Left" Margin="490,25,0,0" VerticalAlignment="Top" FontSize="25"/>
         <Label Content="bis" HorizontalAlignment="Left" Margin="659,21,0,0" VerticalAlignment="Top" FontSize="25"/>
-        <TextBlock Text="{Binding Path=WSP.End, StringFormat={x:Static local:Consts.DateTimeUiFormat}}" HorizontalAlignment="Left" Margin="745,25,0,0" VerticalAlignment="Top" FontSize="25"/>
+        <TextBlock Text="{Binding Path=WochenStdPlan.End, StringFormat={x:Static local:Consts.DateTimeUiFormat}}" HorizontalAlignment="Left" Margin="745,25,0,0" VerticalAlignment="Top" FontSize="25"/>
     </Grid>
 </Page>

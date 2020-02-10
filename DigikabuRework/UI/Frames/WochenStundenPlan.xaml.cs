@@ -25,7 +25,7 @@ namespace DigikabuRework.UI.Frames
         {
             mvm = (MainViewModel)FindResource("mvm");
             InitializeComponent();
-            mvm.GetWochenSP(false);
+            mvm.GetWochenStundenplan(false);
         }
 
         public void Dispose()
@@ -44,14 +44,14 @@ namespace DigikabuRework.UI.Frames
 
         private void Left_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            SwitchWSP(false);
+            SwitchWoche(false);
         }
 
         private void Right_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            SwitchWSP(true);
+            SwitchWoche(true);
         }
-        private void SwitchWSP(bool next)
+        private void SwitchWoche(bool next)
         {
             if (next)
             {
@@ -63,7 +63,7 @@ namespace DigikabuRework.UI.Frames
                 Left.IsEnabled = false;
                 Right.IsEnabled = true;
             }
-            mvm.GetWochenSP(next);
+            mvm.GetWochenStundenplan(next);
         }
     }
 }

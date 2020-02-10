@@ -83,9 +83,9 @@ namespace DigikabuRework
         }
 
 
-        public WochenStundenPlan WSP { get; set; } = new WochenStundenPlan();
+        public WochenStundenPlan WochenStdPlan { get; set; } = new WochenStundenPlan();
 
-        private DigiCon Connection;
+        private DigiCon connection;
 
         public SchuelerInfo Sinfo { get; set; }
 
@@ -95,7 +95,7 @@ namespace DigikabuRework
             StundenDauer.SetupStundenDauerListe();
             UserName = Settings.Default.UserName;
             KeepData = Settings.Default.keepData;
-            Connection = new DigiCon(this);
+            connection = new DigiCon(this);
             GetSpeiseplan();
         }
 
@@ -121,7 +121,7 @@ namespace DigikabuRework
         {
             try
             {
-                await Connection.LoginAsync();
+                await connection.LoginAsync();
                 OpenMenu();
             }
             catch (Exception e)
@@ -134,7 +134,7 @@ namespace DigikabuRework
         }
         public async Task Logout()
         {
-           await Connection.Logout();
+           await connection.Logout();
         }
         private void OpenMenu()
         {
@@ -146,7 +146,7 @@ namespace DigikabuRework
         {
             stundenplan.Clear();
             terminplan.Clear();
-            await Connection.GetStundenUndTermine(t);
+            await connection.GetStundenUndTermine(t);
            
         }
 
@@ -166,36 +166,36 @@ namespace DigikabuRework
         }
         public async Task GetSpeiseplan()
         {
-            await Connection.GetSpeiseplan();
+            await connection.GetSpeiseplan();
         }
-        public async Task GetWochenSP(bool nextWeek)
+        public async Task GetWochenStundenplan(bool nextWeek)
         {
-            ClearWSP();
+            ClearWochenStundenPlan();
             DateTime start = StartingDateOfWeek(DateTime.Now);
             
             if (nextWeek)
             {
                 start = start.AddDays(7);
             }
-            WSP.Start = start;
-            WSP.End = start.AddDays(6);
-            WSP.Montag = await GetStundenplanOfDay(start);
-            WSP.Dienstag = await GetStundenplanOfDay(start.AddDays(1));
-            WSP.Mittwoch = await GetStundenplanOfDay(start.AddDays(2));
-            WSP.Donnerstag = await GetStundenplanOfDay(start.AddDays(3));
-            WSP.Freitag = await GetStundenplanOfDay(start.AddDays(4));
+            WochenStdPlan.Start = start;
+            WochenStdPlan.End = start.AddDays(6);
+            WochenStdPlan.Montag = await GetStundenplanOfDay(start);
+            WochenStdPlan.Dienstag = await GetStundenplanOfDay(start.AddDays(1));
+            WochenStdPlan.Mittwoch = await GetStundenplanOfDay(start.AddDays(2));
+            WochenStdPlan.Donnerstag = await GetStundenplanOfDay(start.AddDays(3));
+            WochenStdPlan.Freitag = await GetStundenplanOfDay(start.AddDays(4));
         }
-        private void ClearWSP()
+        private void ClearWochenStundenPlan()
         {
-            WSP.Montag.Clear();
-            WSP.Dienstag.Clear();
-            WSP.Mittwoch.Clear();
-            WSP.Donnerstag.Clear();
-            WSP.Freitag.Clear();
+            WochenStdPlan.Montag.Clear();
+            WochenStdPlan.Dienstag.Clear();
+            WochenStdPlan.Mittwoch.Clear();
+            WochenStdPlan.Donnerstag.Clear();
+            WochenStdPlan.Freitag.Clear();
         }
         public async Task<List<Stunde>> GetStundenplanOfDay(DateTime t)
         {
-            return await Connection.GetStunden(t);
+            return await connection.GetStunden(t);
         }
         private DateTime StartingDateOfWeek(DateTime date)
         {
