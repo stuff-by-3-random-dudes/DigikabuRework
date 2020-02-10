@@ -25,6 +25,20 @@ namespace DigikabuRework
             {
                 zeitBisNaechsteStunde = value;
                 onPropertyChanged();
+                ZeitBisNaechsteStundeAsString = GetTimerAsString();
+            }
+        }
+        private string zeitBisNaechsteStundeAsString = "vor Unterrichtsbeginn";
+        public string ZeitBisNaechsteStundeAsString
+        {
+            get
+            {
+                return zeitBisNaechsteStundeAsString;
+            }
+            set
+            {
+                zeitBisNaechsteStundeAsString = value;
+                onPropertyChanged();
             }
         }
         public string UserName { get; set; }
@@ -102,6 +116,21 @@ namespace DigikabuRework
         public async Task getStundenUndTermine()
         {
             await Connection.getStundenUndTermine();
+        }
+
+        public string GetTimerAsString()
+        {
+            string ret = String.Empty;
+            if (ZeitBisNaechsteStunde.Hours != 0)
+            {
+                ret += $"{ZeitBisNaechsteStunde.Hours} Stunden\n";
+            }
+            if (ZeitBisNaechsteStunde.Minutes != 0)
+            {
+                ret += $"{ZeitBisNaechsteStunde.Minutes} Minuten\n";
+            }
+            ret += $"{ZeitBisNaechsteStunde.Seconds} Sekunden verbleibend";
+            return ret;
         }
     }
 }

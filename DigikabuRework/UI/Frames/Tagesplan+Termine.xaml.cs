@@ -59,6 +59,7 @@ namespace DigikabuRework.UI.Frames
         }
         public void changeStunde()
         {
+            bool zeitGesetzt = false;
             foreach (Stunde item in SP.ItemsSource)
             {
                 var row = SP.ItemContainerGenerator.ContainerFromItem(item) as DataGridRow;
@@ -69,11 +70,21 @@ namespace DigikabuRework.UI.Frames
                         row.Background = Brushes.DarkGray;
                     }
                     mvm.ZeitBisNaechsteStunde = item.Std.Ende.Subtract(DateTime.Now);
+                    zeitGesetzt = true;
                 }
                 else if(row != null)
                 {
                     row.Background = this.Background;
                 }
+            }
+            if (!zeitGesetzt && DateTime.Now.Subtract(StundenDauer.StundenDauerListe[StundenDauer.StundenDauerListe.Count - 2].Ende) > new TimeSpan(0))//17- 16.5
+            {
+                //mvm.ZeitBisNaechsteStunde = StundenDauer.StundenDauerListe[StundenDauer.StundenDauerListe.Count - 2].Ende.Subtract(DateTime.Now);
+                mvm.ZeitBisNaechsteStundeAsString = "Unterricht heute vorbei";
+            }
+            else if (!zeitGesetzt)
+            {
+                mvm.ZeitBisNaechsteStunde = StundenDauer.StundenDauerListe[0].Anfang.Subtract(DateTime.Now);
             }
         }
 
