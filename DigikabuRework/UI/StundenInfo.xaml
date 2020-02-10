@@ -5,11 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DigikabuRework.UI"
         mc:Ignorable="d"
-        Title="StundenInfo" Height="135.245" Width="318.033">
+        Title="StundenInfo" Height="153" Width="325.333" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" Background="LightGray" MouseDown="MoveWindow">
     <Grid DataContext="{StaticResource mvm}">
-        <Label Content="{Binding SelStunde.Fach}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <Label Content="{Binding SelStunde.Lehrer}" HorizontalAlignment="Left" Margin="10,39,0,0" VerticalAlignment="Top"/>
-        <Label Content="{Binding SelStunde.Klassenzimmer}" HorizontalAlignment="Left" Margin="10,68,0,0" VerticalAlignment="Top"/>
+        <Rectangle HorizontalAlignment="Left" Height="35" VerticalAlignment="Top" Width="390">
+            <Rectangle.Fill>
+                <LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1">
+                    <GradientStop Color="#2b27a3" Offset="0"/>
+                    <GradientStop Color="#2f42bd" Offset="1"/>
+                    <GradientStop Color="#2b27a3" Offset="0.5"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+
+        </Rectangle>
+        <Label Content="Fach:" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" FontSize="18"/>
+        <Label Content="Lehrer:" HorizontalAlignment="Left" Margin="10,80,0,0" VerticalAlignment="Top" FontSize="18"/>
+        <Label Content="Klassenzimmer:" HorizontalAlignment="Left" Margin="10,120,0,0" VerticalAlignment="Top" FontSize="18"/>
+        <Label Content="{Binding SelStunde.Fach}" HorizontalAlignment="Left" Margin="63,40,0,0" VerticalAlignment="Top" FontSize="18"/>
+        <Label Content="{Binding SelStunde.Lehrer}" HorizontalAlignment="Left" Margin="73,80,0,0" VerticalAlignment="Top" FontSize="18"/>
+        <Label Content="{Binding SelStunde.Klassenzimmer}" HorizontalAlignment="Left" Margin="143,120,0,0" VerticalAlignment="Top" FontSize="18"/>
+        <Label Content="StundenInfo zur " HorizontalAlignment="Left" Margin="10,1,0,0" VerticalAlignment="Top" Foreground="White" FontSize="18"/>
+        <Label Content="{Binding SelStunde.Schulstunde}" HorizontalAlignment="Left" Margin="149,1,0,0" VerticalAlignment="Top" Foreground="White" FontSize="18" HorizontalContentAlignment="Center" Width="71"/>
+        <Label Content="Stunde" HorizontalAlignment="Left" Margin="220,1,0,0" VerticalAlignment="Top" Foreground="White" FontSize="18"/>
+        <TextBlock HorizontalAlignment="Left" Margin="306,3,0,0" TextWrapping="Wrap" Text="X" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="302,2,0,0" VerticalAlignment="Top" Width="18" Background="{x:Null}" BorderBrush="{x:Null}" Height="25" Click="Window_Close"/>
+
 
     </Grid>
 </Window>

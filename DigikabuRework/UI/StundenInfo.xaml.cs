@@ -23,5 +23,22 @@ namespace DigikabuRework.UI
         {
             InitializeComponent();
         }
+        private void Window_Close(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+        private void MoveWindow(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                if (e.ChangedButton == MouseButton.Left)
+                    this.DragMove();
+            }
+            catch (Exception)
+            {
+
+            }
+
+        }
     }
 }
