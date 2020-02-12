@@ -123,6 +123,7 @@ namespace DigikabuRework
 
         public SchuelerInfo Sinfo { get; set; }
 
+        public bool TimerIsOpen { get; set; } = false;
 
         public MainViewModel()
         {

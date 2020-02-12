@@ -73,8 +73,11 @@ namespace DigikabuRework.UI
                 switch ((sender as ListView).SelectedIndex)
                 {
                     case 1:
-                        TimerWindow tw = new TimerWindow();
-                        tw.Show();
+                        if (!mvm.TimerIsOpen)
+                        {
+                            TimerWindow tw = new TimerWindow();
+                            tw.Show();
+                        }
                         goto case 8;
                     case 0:
                         load_frame.Content = new Frames.Tagesplan_Termine();

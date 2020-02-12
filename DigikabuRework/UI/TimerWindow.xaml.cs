@@ -19,13 +19,15 @@ namespace DigikabuRework.UI
     /// </summary>
     public partial class TimerWindow : Window
     {
+        MainViewModel mvm = null;
         public TimerWindow()
         {
+            mvm = (MainViewModel)FindResource("mvm");
+            mvm.TimerIsOpen = true;
             InitializeComponent();
         }
         private void Window_Close(object sender, RoutedEventArgs e)
         {
-            
             this.Close();
         }
     private void MoveWindow(object sender, MouseButtonEventArgs e)
@@ -39,7 +41,17 @@ namespace DigikabuRework.UI
         {
 
         }
-
     }
-}
+
+        private void Window_Deactivated(object sender, EventArgs e)
+        {
+            Window window = (Window)sender;
+            window.Topmost = true;
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            mvm.TimerIsOpen = false;
+        }
+    }
 }
