@@ -696,64 +696,54 @@ namespace DigikabuRework.Connection
             }
             mvm.SchulaufgabenUndSonstige = ret;
         }
-        public async Task GetSpeiseplan()
+        public async Task<List<Speise>> GetSpeiseplan()
         {
-            List<string> sp = new List<string>();
-            var response = await client.GetAsync("https://www.bs-wiesau.de/index.php/bsz-wiesau/speiseplan-bistro");
+            // old url "https://www.bs-wiesau.de/index.php/bsz-wiesau/speiseplan-bistro"
+            var response = await client.GetAsync("https://www.bs-wiesau.de/index.php/bsz-wiesau/speiseplan-bistro?tmpl=component&print=1&page=");
             var responseString = await response.Content.ReadAsStringAsync();
             string[] els = responseString.Split('>');
 
-            bool abtabelle = false;
-
-            bool increment = false, abessen = false;
-            List<string> gerichte = new List<string>();
-            gerichte.Add(string.Empty);
+            bool nextIsPartOfFoodString = false, inTabelle = false;
+            string toAdd;
+            List<string> stringEssensListe = new List<string>();
 
             foreach (var item in els)
             {
-                if (!abtabelle && item.Trim().Contains("<table style=\"border-collapse: collapse;\"")/*item.ToLower().Contains("montag")*/)
+                if (!inTabelle && item.Trim().Contains("<td style=\"width:195px;height:283px;\"")/*item.ToLower().Contains("montag")*/)
                 {
-                    abtabelle = true;
+                    inTabelle = true;
                 }
                 if (item.Contains("Alle Gerichte gerne auch zum Mitnehmen"))
                 {
-                    abtabelle = false;
+                    inTabelle = false;
                 }
-                if (abtabelle && gerichte.Count < 6)
+                if (inTabelle)
                 {
-                    if (item.Contains("line-height: 150"))
+                    if (item.Contains("<td style=\"width:195px;height:283px;\""))
                     {
-                        abessen = true;
+                        stringEssensListe.Add(String.Empty);
                     }
-
-                    if (abessen && item.Contains("td"))
+                    if (nextIsPartOfFoodString)
                     {
-                        if (!increment)
+                        toAdd = item.Split('<')[0].Trim();
+                        if (!toAdd.Equals("&nbsp;"))
                         {
-                            increment = true;
+                            stringEssensListe[stringEssensListe.Count - 1] += toAdd + " ";
                         }
-                        else
-                        {
-                            gerichte.Add(String.Empty);
-                            increment = false;
-                        }
+                        nextIsPartOfFoodString = false;
                     }
-                    if (item.Contains("/span"))
+                    if (item.Equals("<p align=\"center\""))
                     {
-                        string ausgabe = item.Split('<')[0];
-                        if (ausgabe != String.Empty)
-                        {
-                            gerichte[gerichte.Count - 1] += ausgabe + " ";
-                        }
-                      
+                        nextIsPartOfFoodString = true;
                     }
                 }
             }
-            mvm.Speiseplan.Clear();
-            mvm.Speiseplan.Add(new Speise("Montag", gerichte[0]));
-            mvm.Speiseplan.Add(new Speise("Dienstag", gerichte[1]));
-            mvm.Speiseplan.Add(new Speise("Mittwoch", gerichte[2]));
-            mvm.Speiseplan.Add(new Speise("Donnerstag", gerichte[3]));
+            List<Speise> essensListe = new List<Speise>();
+            essensListe.Add(new Speise("Montag", stringEssensListe[0]));
+            essensListe.Add(new Speise("Dienstag", stringEssensListe[1]));
+            essensListe.Add(new Speise("Mittwoch", stringEssensListe[2]));
+            essensListe.Add(new Speise("Donnerstag", stringEssensListe[3]));
+            return essensListe;
         }
        
     }

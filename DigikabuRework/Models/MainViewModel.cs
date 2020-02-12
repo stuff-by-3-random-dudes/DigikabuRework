@@ -227,7 +227,7 @@ namespace DigikabuRework
         }
         public async Task GetSpeiseplan()
         {
-            await connection.GetSpeiseplan();
+            Speiseplan = await connection.GetSpeiseplan();
         }
         public async Task GetWochenStundenplan(bool nextWeek)
         {
