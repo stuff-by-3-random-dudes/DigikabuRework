@@ -54,10 +54,6 @@ namespace DigikabuRework.Connection
                 {
                     await GetUNKLAsync();
                 }
-            
-            
-            
-
         }
         public async Task GetUNKLAsync()
         {
@@ -88,9 +84,7 @@ namespace DigikabuRework.Connection
                         retval += ";" + klassesplit[0];
 
                     }
-
                 }
-
             }
             var splitUNKL = retval.Split(';');
             mvm.Sinfo = new Klassen.SchuelerInfo(splitUNKL[0], splitUNKL[1]);
@@ -114,17 +108,9 @@ namespace DigikabuRework.Connection
         }
         public async Task GetStundenUndTermine(DateTime t)
         {     
-            try
-            {
-                await Relog();
-                mvm.Terminplan = await GetTermine();
-                mvm.Stundenplan = await GetStunden(t);
-            }
-            catch (Exception)
-            {
-
-            }
-           
+            await Relog();
+            mvm.Terminplan = await GetTermine();
+            mvm.Stundenplan = await GetStunden(t);
         }
         public async Task<List<Stunde>> GetStunden(DateTime tag)
         {
@@ -192,34 +178,31 @@ namespace DigikabuRework.Connection
                         string stunde;
                         string[] split = s.Split('>');
                         stunde = split[1];
-                        if(fach2 < 2)
+                        if (fach2 < 2)
                         {
-                            if(fach == 2)
+                            if (fach == 2)
                             {
                                 if (!pause)
                                 {
-                                    ret.Add(new Klassen.Stunde(Schulstunden.Pause, "Pause","Keiner",klassenzimmer));
-                                    
+                                    ret.Add(new Klassen.Stunde(Schulstunden.Pause, "Pause", "Keiner", klassenzimmer));
+
                                     pause = true;
                                 }
-                                
                             }
-                            if(splitfach1[1] != "115")
+                            if (splitfach1[1] != "115")
                             {
                                 if (!naechste)
                                 {
                                     ret.Add(new Klassen.Stunde((Klassen.Schulstunden)fach, stunde, lehrer, klassenzimmer));
                                     written = true;
                                 }
-                                
-                               
-                                
                             }
                             else
                             {
 
                             }
-                        }else if(fach2 == 2)
+                        }
+                        else if (fach2 == 2)
                         {
                             if (fach == 2)
                             {
@@ -237,15 +220,14 @@ namespace DigikabuRework.Connection
                                     ret.Add(new Klassen.Stunde((Klassen.Schulstunden)fach + 1, stunde, lehrer, klassenzimmer));
                                     written = true;
                                 }
-                                
-                                
                             }
                             else
                             {
-                                
+
                             }
                         }
-                        else{
+                        else
+                        {
                             if (splitfach1[1] != "115")
                             {
                                 if (!naechste)
@@ -255,15 +237,11 @@ namespace DigikabuRework.Connection
                                     ret.Add(new Klassen.Stunde((Klassen.Schulstunden)fach + 2, stunde, lehrer, klassenzimmer));
                                     written = true;
                                 }
-                                
-
-                                
                             }
                             else
                             {
 
                             }
-                            
                         }
                     }
                 }
@@ -377,7 +355,6 @@ namespace DigikabuRework.Connection
                 }
                 if (dat == true && done == true)
                 {
-
                     datum = s.Trim().Split('>')[1];
 
                     dat = false;
@@ -441,7 +418,7 @@ namespace DigikabuRework.Connection
                     }
                     else
                     {
-                            art = s.Trim().Split('>')[1].Replace("             ", "").Replace("                ", "").Trim();
+                        art = s.Trim().Split('>')[1].Replace("             ", "").Replace("                ", "").Trim();
                         a = false;
                         ent = true;
                         i = 0;
@@ -466,15 +443,10 @@ namespace DigikabuRework.Connection
                             entschuldigt = false;
 
                         }
-
                         ent = false;
                         endtr = true;
                         i = 0;
                     }
-
-
-
-
                     done = false;
                 }
                 if (endtr == true && done == true)
@@ -499,7 +471,6 @@ namespace DigikabuRework.Connection
                         }
                         ret.Add(new Fehlzeit(Convert.ToDateTime(retdat), von, bis, art,bemerkung,entschuldigt));
 
-
                     datum = "";
                     von = "";
                     bis = "";
@@ -507,9 +478,8 @@ namespace DigikabuRework.Connection
                     entschuldigt = false;
                 }
             }
-
         }
-            mvm.Fehlzeiten = ret;
+        mvm.Fehlzeiten = ret;
     }
 
         public async Task<List<Termine>> GetTermine()
@@ -523,7 +493,6 @@ namespace DigikabuRework.Connection
 
             foreach (string s in responseString.Split('<'))
             {
-
                 if (s.Contains("td"))
                 {
                     var trim = s.Trim();
@@ -567,14 +536,11 @@ namespace DigikabuRework.Connection
                         {
                             retdat = DateTime.Now.ToString();
                         }
-                        
-
                         CultureInfo ci = new CultureInfo("de-DE");
                         // Get the DateTimeFormatInfo for the en-US culture.
                         DateTimeFormatInfo dtfi = ci.DateTimeFormat;
                         DayOfWeek dow= Convert.ToDateTime(retdat).DayOfWeek;
                         ret.Add(new Klassen.Termine(dtfi.GetShortestDayName(dow), info[0], info[1]));
-
                     }
                 }
             }
@@ -599,7 +565,6 @@ namespace DigikabuRework.Connection
             {
                
             }
-           
         }
         public async Task Logout()
         {
@@ -648,7 +613,7 @@ namespace DigikabuRework.Connection
                 {
                     nextisyear = true;
                 }
-               
+
                 switch (counter)
                 {
                     case 6:
@@ -657,7 +622,7 @@ namespace DigikabuRework.Connection
                         if (CultureInfo.CurrentCulture.Name.Contains("en"))
                         {
                             var splitdat = dat.Split('.');
-                           datesave = $"{splitdat[1]}.{splitdat[0]}.{splitdat[2]}";
+                            datesave = $"{splitdat[1]}.{splitdat[0]}.{splitdat[2]}";
                         }
                         else if (CultureInfo.CurrentCulture.Name == "de-DE")
                         {
@@ -692,7 +657,6 @@ namespace DigikabuRework.Connection
                 DateTimeFormatInfo dtfi = ci.DateTimeFormat;
                 DayOfWeek dow = Convert.ToDateTime(splitTer[0]).DayOfWeek;
                 ret.Add(new Klassen.Termine(dtfi.GetShortestDayName(dow), splitTer[0], splitTer[1]));
-
             }
             mvm.SchulaufgabenUndSonstige = ret;
         }
@@ -745,6 +709,5 @@ namespace DigikabuRework.Connection
             essensListe.Add(new Speise("Donnerstag", stringEssensListe[3]));
             return essensListe;
         }
-       
     }
 }

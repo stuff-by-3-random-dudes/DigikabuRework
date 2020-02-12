@@ -105,26 +105,6 @@ namespace DigikabuRework
             }
         }
 
-        private string vonKrank;
-
-        public string VonKrank
-        {
-            get { return vonKrank; }
-            set { vonKrank = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string bisKrank;
-
-        public string BisKrank
-        {
-            get { return bisKrank; }
-            set { bisKrank = value;
-                OnPropertyChanged();
-            }
-        }
-
 
         private List<Fehlzeit> fehlzeiten = new List<Fehlzeit>();
 

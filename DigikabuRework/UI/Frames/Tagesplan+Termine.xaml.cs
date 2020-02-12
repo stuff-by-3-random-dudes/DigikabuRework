@@ -28,7 +28,14 @@ namespace DigikabuRework.UI.Frames
         public Tagesplan_Termine()
         {
             mvm = (MainViewModel)FindResource("mvm");
-            GetStundenPlanUndTermine();
+            try
+            {
+                GetStundenPlanUndTermine();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
             SetupTimer();
             InitializeComponent();
             
