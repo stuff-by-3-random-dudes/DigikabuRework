@@ -62,7 +62,8 @@ namespace DigikabuRework.UI
         {
 
 
-           
+                if((sender as ListView).SelectedIndex != selectedIndex)
+            {
                 if ((sender as ListView).SelectedIndex != 1)
                 {
                     DestroyFrame();
@@ -108,6 +109,8 @@ namespace DigikabuRework.UI
                         Console.WriteLine((sender as ListView).SelectedIndex);
                         break;
                 }
+            }
+               
             
         }
 

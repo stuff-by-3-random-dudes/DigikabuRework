@@ -312,6 +312,7 @@ namespace DigikabuRework.Connection
 
         public async Task GetFehlzeiten()
         {
+            mvm.Fehlzeiten.Clear();
             //nach folgenden string wird für ganztags gesucht
             //style = "color:blue;font-weight:bold"
             var response = await client.GetAsync("https://digikabu.de/Fehlzeiten");
@@ -332,7 +333,8 @@ namespace DigikabuRework.Connection
             string[] sweise1 = stunden[1].Split('>');//nummer = 2, {nummer}</span
             string[] sweise = sweise1[1].Split('<');
             mvm.AnzahlFehlzeit = new Fehlzeit(Convert.ToInt32(ganztags[0]), Convert.ToInt32(sweise[0]));
-
+            mvm.VonKrank = ganztags[0];
+            mvm.BisKrank = sweise[0];
             bool rtb = false;
             bool tr = false;
             bool endtr = false;
@@ -440,7 +442,7 @@ namespace DigikabuRework.Connection
                     }
                     else
                     {
-                            art = s.Trim().Split('>')[1];
+                            art = s.Trim().Split('>')[1].Replace("             ", "").Replace("                ", "").Trim();
                         a = false;
                         ent = true;
                         i = 0;
@@ -615,6 +617,7 @@ namespace DigikabuRework.Connection
         }
         public async Task GetSchulaufgaben()
         {
+            mvm.SchulaufgabenUndSonstige.Clear();
             string datesave = string.Empty;
             string dat = string.Empty;
             int counter = 0;

@@ -103,6 +103,27 @@ namespace DigikabuRework
             set { fehlzeit = value; }
         }
 
+        private string vonKrank;
+
+        public string VonKrank
+        {
+            get { return vonKrank; }
+            set { vonKrank = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string bisKrank;
+
+        public string BisKrank
+        {
+            get { return bisKrank; }
+            set { bisKrank = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         private List<Fehlzeit> fehlzeiten = new List<Fehlzeit>();
 
         public List<Fehlzeit> Fehlzeiten
@@ -127,7 +148,7 @@ namespace DigikabuRework
             UserName = Settings.Default.UserName;
             KeepData = Settings.Default.keepData;
             connection = new DigiCon(this);
-           
+            
         }
 
         public async Task GetSchulaufgaben()
@@ -164,8 +185,8 @@ namespace DigikabuRework
                 (sender as ErrorThrower).ThrowErrorMessage(e.Message);
                 throw new Exception();
             }
-           
-
+            Task.Run(async () => await GetFehlzeiten());
+            Task.Run(async () => await GetSchulaufgaben());
         }
         public async Task Logout()
         {
@@ -186,6 +207,7 @@ namespace DigikabuRework
         }
         public async Task GetFehlzeiten() {
             await connection.GetFehlzeiten();
+            Console.WriteLine("Done");
         }
 
         public string GetTimerAsString()
