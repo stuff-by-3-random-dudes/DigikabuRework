@@ -25,7 +25,7 @@ namespace DigikabuRework.UI.Frames
         public Fehlzeiten()
         {
             mvm = (MainViewModel)FindResource("mvm");
-            
+            mvm.GetFehlzeiten();
             InitializeComponent();
         }
 

@@ -333,8 +333,6 @@ namespace DigikabuRework.Connection
             string[] sweise1 = stunden[1].Split('>');//nummer = 2, {nummer}</span
             string[] sweise = sweise1[1].Split('<');
             mvm.AnzahlFehlzeit = new Fehlzeit(Convert.ToInt32(ganztags[0]), Convert.ToInt32(sweise[0]));
-            mvm.VonKrank = ganztags[0];
-            mvm.BisKrank = sweise[0];
             bool rtb = false;
             bool tr = false;
             bool endtr = false;
@@ -352,6 +350,7 @@ namespace DigikabuRework.Connection
             bool entschuldigt = false;
             byte i = 0;
             string art = string.Empty;
+            List<Fehlzeit> ret = new List<Fehlzeit>();
             foreach (string s in responsestring.Split('<'))
             {
                 done = true;
@@ -498,7 +497,7 @@ namespace DigikabuRework.Connection
                         {
                             retdat = DateTime.Now.ToString();
                         }
-                        mvm.Fehlzeiten.Add(new Fehlzeit(Convert.ToDateTime(retdat), von, bis, art,bemerkung,entschuldigt));
+                        ret.Add(new Fehlzeit(Convert.ToDateTime(retdat), von, bis, art,bemerkung,entschuldigt));
 
 
                     datum = "";
@@ -510,6 +509,7 @@ namespace DigikabuRework.Connection
             }
 
         }
+            mvm.Fehlzeiten = ret;
     }
 
         public async Task<List<Termine>> GetTermine()
@@ -618,6 +618,7 @@ namespace DigikabuRework.Connection
         public async Task GetSchulaufgaben()
         {
             mvm.SchulaufgabenUndSonstige.Clear();
+            List<Termine> ret = new List<Termine>();
             string datesave = string.Empty;
             string dat = string.Empty;
             int counter = 0;
@@ -690,9 +691,10 @@ namespace DigikabuRework.Connection
                 // Get the DateTimeFormatInfo for the en-US culture.
                 DateTimeFormatInfo dtfi = ci.DateTimeFormat;
                 DayOfWeek dow = Convert.ToDateTime(splitTer[0]).DayOfWeek;
-                mvm.SchulaufgabenUndSonstige.Add(new Klassen.Termine(dtfi.GetShortestDayName(dow), splitTer[0], splitTer[1]));
+                ret.Add(new Klassen.Termine(dtfi.GetShortestDayName(dow), splitTer[0], splitTer[1]));
 
             }
+            mvm.SchulaufgabenUndSonstige = ret;
         }
         public async Task GetSpeiseplan()
         {

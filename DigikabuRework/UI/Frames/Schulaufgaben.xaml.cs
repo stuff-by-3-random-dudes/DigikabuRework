@@ -24,7 +24,7 @@ namespace DigikabuRework.UI.Frames
         public Schulaufgaben()
         {
             mvm = (MainViewModel)FindResource("mvm");
-           // mvm.GetSchulaufgaben();
+            mvm.GetSchulaufgaben();
             InitializeComponent();
         }
 

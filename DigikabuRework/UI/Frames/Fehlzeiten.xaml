@@ -21,8 +21,8 @@
             </DataGrid.Columns>
         </DataGrid>
         <TextBlock HorizontalAlignment="Left" Margin="32,27,0,0" TextWrapping="Wrap" Text="Ganztags: " VerticalAlignment="Top" FontSize="25"/>
-        <TextBlock HorizontalAlignment="Left" Margin="151,27,0,0" TextWrapping="Wrap" Text="{Binding VonKrank}" VerticalAlignment="Top" FontSize="25"/>
+        <TextBlock HorizontalAlignment="Left" Margin="151,27,0,0" TextWrapping="Wrap" Text="{Binding AnzahlFehlzeit.Ganztags}" VerticalAlignment="Top" FontSize="25"/>
         <TextBlock HorizontalAlignment="Left" Margin="867,27,0,0" TextWrapping="Wrap" Text="Stundenweiße: " VerticalAlignment="Top" FontSize="25"/>
-        <TextBlock HorizontalAlignment="Left" Margin="1039,27,0,0" TextWrapping="Wrap" Text="{Binding BisKrank}" VerticalAlignment="Top" FontSize="25"/>
+        <TextBlock HorizontalAlignment="Left" Margin="1039,27,0,0" TextWrapping="Wrap" Text="{Binding AnzahlFehlzeit.Stundenweiße}" VerticalAlignment="Top" FontSize="25"/>
     </Grid>
 </Page>

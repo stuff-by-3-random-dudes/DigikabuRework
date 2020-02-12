@@ -19,7 +19,7 @@ namespace DigikabuRework.Klassen
             set
             {
                 ganztags = value;
-                OnPropertyChanged();
+                
             }
         }
         public int Stundenweiße
@@ -31,7 +31,7 @@ namespace DigikabuRework.Klassen
             set
             {
                 stundenweiße = value;
-                OnPropertyChanged();
+               
             }
         }
         private DateTime datum;

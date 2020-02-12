@@ -100,7 +100,9 @@ namespace DigikabuRework
         public Fehlzeit AnzahlFehlzeit
         {
             get { return fehlzeit; }
-            set { fehlzeit = value; }
+            set { fehlzeit = value;
+                OnPropertyChanged();
+            }
         }
 
         private string vonKrank;
@@ -185,8 +187,7 @@ namespace DigikabuRework
                 (sender as ErrorThrower).ThrowErrorMessage(e.Message);
                 throw new Exception();
             }
-            Task.Run(async () => await GetFehlzeiten());
-            Task.Run(async () => await GetSchulaufgaben());
+           
         }
         public async Task Logout()
         {
