@@ -28,6 +28,19 @@ namespace DigikabuRework
                 ZeitBisNaechsteStundeAsString = GetTimerAsString();
             }
         }
+
+        private List<Termine> schulaufgabenUndSonstige = new List<Termine>();
+
+        public List<Termine> SchulaufgabenUndSonstige
+        {
+            get { return schulaufgabenUndSonstige; }
+            set { schulaufgabenUndSonstige = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+
         private List<Speise> speiseplan = new List<Speise>();
 
         
@@ -82,6 +95,24 @@ namespace DigikabuRework
             }
         }
 
+        private Fehlzeit fehlzeit;
+
+        public Fehlzeit AnzahlFehlzeit
+        {
+            get { return fehlzeit; }
+            set { fehlzeit = value; }
+        }
+
+        private List<Fehlzeit> fehlzeiten = new List<Fehlzeit>();
+
+        public List<Fehlzeit> Fehlzeiten
+        {
+            get { return fehlzeiten; }
+            set { fehlzeiten = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         public WochenStundenPlan WochenStdPlan { get; set; } = new WochenStundenPlan();
 
@@ -96,10 +127,14 @@ namespace DigikabuRework
             UserName = Settings.Default.UserName;
             KeepData = Settings.Default.keepData;
             connection = new DigiCon(this);
-            GetSpeiseplan();
+           
         }
 
-        
+        public async Task GetSchulaufgaben()
+        {
+            await connection.GetSchulaufgaben();
+        }
+
         public async Task LoginAppStart(string pwd, object sender)
         {
             if (KeepData)
@@ -148,6 +183,9 @@ namespace DigikabuRework
             terminplan.Clear();
             await connection.GetStundenUndTermine(t);
            
+        }
+        public async Task GetFehlzeiten() {
+            await connection.GetFehlzeiten();
         }
 
         public string GetTimerAsString()

@@ -309,6 +309,207 @@ namespace DigikabuRework.Connection
             }
             return newret;
         }
+
+        public async Task GetFehlzeiten()
+        {
+            //nach folgenden string wird für ganztags gesucht
+            //style = "color:blue;font-weight:bold"
+            var response = await client.GetAsync("https://digikabu.de/Fehlzeiten");
+            var responsestring = await response.Content.ReadAsStringAsync();
+            int z = 0; //0 für ganztag, 1 für stundenweise
+            string[] stunden = new string[2];
+            foreach (string s in responsestring.Split(' '))
+            {
+                if (s.Contains("style=\"color:blue;font-weight:bold\">"))
+                {
+                    stunden[z] = s;
+                    z++;
+                }
+            }
+            string[] ganztags1 = stunden[0].Split('>');//nummer = 2, {nummer}</span
+
+            string[] ganztags = ganztags1[1].Split('<');
+            string[] sweise1 = stunden[1].Split('>');//nummer = 2, {nummer}</span
+            string[] sweise = sweise1[1].Split('<');
+            mvm.AnzahlFehlzeit = new Fehlzeit(Convert.ToInt32(ganztags[0]), Convert.ToInt32(sweise[0]));
+
+            bool rtb = false;
+            bool tr = false;
+            bool endtr = false;
+            bool dat = false;
+            bool v = false;
+            bool b = false;
+            bool bemerk = false;
+            bool a = false;
+            bool ent = false;
+            bool done = false;
+            string datum = "";
+            string von = "";
+            string bis = "";
+            string bemerkung = "";
+            bool entschuldigt = false;
+            byte i = 0;
+            string art = string.Empty;
+            foreach (string s in responsestring.Split('<'))
+            {
+                done = true;
+            if (s.Contains("table class") && done == true)
+            {
+                rtb = true;
+                done = false;
+            }
+            if (rtb == true)
+            {
+                if (s.Contains("tbody") && !s.Contains("/") && done == true)
+                {
+                    tr = true;
+                    done = false;
+                }
+                if (tr == true)
+                {
+                    if (s.Contains("tr") && !s.Contains("/") && done == true)
+                    {
+                        tr = false;
+                        dat = true;
+                        done = false;
+                    }
+                }
+                if (dat == true && done == true)
+                {
+
+                    datum = s.Trim().Split('>')[1];
+
+                    dat = false;
+                    v = true;
+                    done = false;
+                }
+                if (v == true && done == true)
+                {
+                    if (i == 0)
+                    {
+                        i++;
+                    }
+                    else
+                    {
+                        von = s.Trim().Split('>')[1];
+
+                        v = false;
+                        b = true;
+                        i = 0;
+                    }
+                    done = false;
+                }
+                if (b == true && done == true)
+                {
+                    if (i == 0)
+                    {
+                        i++;
+                    }
+                    else
+                    {
+                        bis = s.Trim().Split('>')[1];
+
+                        b = false;
+                        bemerk = true;
+                        i = 0;
+                    }
+                    done = false;
+                }
+                if (bemerk == true && done == true)
+                {
+
+                    if (i == 0)
+                    {
+                        i++;
+                    }
+                    else
+                    {
+                        bemerkung = s.Trim().Split('>')[1];
+
+                        bemerk = false;
+                        a = true;
+                        i = 0;
+                    }
+                    done = false;
+                }
+                if (a == true && done == true)
+                {
+                    if (i == 0)
+                    {
+                        i++;
+                    }
+                    else
+                    {
+                            art = s.Trim().Split('>')[1];
+                        a = false;
+                        ent = true;
+                        i = 0;
+                    }
+                    done = false;
+                }
+                if (ent == true && done == true)
+                {
+                    if (i < 2)
+                    {
+                        i++;
+                    }
+                    else
+                    {
+                        if (s.Contains("glyphicon"))
+                        {
+                                entschuldigt = true;
+
+                        }
+                        else
+                        {
+                            entschuldigt = false;
+
+                        }
+
+                        ent = false;
+                        endtr = true;
+                        i = 0;
+                    }
+
+
+
+
+                    done = false;
+                }
+                if (endtr == true && done == true)
+                {
+                    done = false;
+
+                    endtr = false;
+                    tr = true;
+                        var retdat = string.Empty;
+                        if (CultureInfo.CurrentCulture.Name.Contains("en"))
+                        {
+                            var splitdat = datum.Split('.');
+                            retdat = $"{splitdat[1]}.{splitdat[0]}.{splitdat[2]}";
+                        }
+                        else if (CultureInfo.CurrentCulture.Name == "de-DE")
+                        {
+                            retdat = datum;
+                        }
+                        else
+                        {
+                            retdat = DateTime.Now.ToString();
+                        }
+                        mvm.Fehlzeiten.Add(new Fehlzeit(Convert.ToDateTime(retdat), von, bis, art,bemerkung,entschuldigt));
+
+
+                    datum = "";
+                    von = "";
+                    bis = "";
+                    bemerkung = "";
+                    entschuldigt = false;
+                }
+            }
+
+        }
+    }
+
         public async Task<List<Termine>> GetTermine()
         {
             List<Termine> ret = new List<Termine>();
@@ -412,6 +613,84 @@ namespace DigikabuRework.Connection
 
             }
         }
+        public async Task GetSchulaufgaben()
+        {
+            string datesave = string.Empty;
+            string dat = string.Empty;
+            int counter = 0;
+            var values = new Dictionary<string, string>
+            {
+
+            };
+
+            FormUrlEncodedContent content = new FormUrlEncodedContent(values);
+            var response = await client.PostAsync("https://digikabu.de/SchulaufgabenPlan", content);
+
+            var responseString = await response.Content.ReadAsStringAsync();
+            List<string> termine = new List<string>();
+
+            string[] split = responseString.Split('>');
+            string jahr = "";
+            bool nextisyear = false;
+            foreach (string s in split)
+            {
+                if (nextisyear == true)
+                {
+                    Console.WriteLine(s);
+                    jahr = s.Split(' ')[1].Replace("</h4","");
+                    nextisyear = false;
+                }
+                if (s.Contains("<h4"))
+                {
+                    nextisyear = true;
+                }
+               
+                switch (counter)
+                {
+                    case 6:
+
+                        dat = s.Replace("</strong", "") + jahr;
+                        if (CultureInfo.CurrentCulture.Name.Contains("en"))
+                        {
+                            var splitdat = dat.Split('.');
+                           datesave = $"{splitdat[1]}.{splitdat[0]}.{splitdat[2]}";
+                        }
+                        else if (CultureInfo.CurrentCulture.Name == "de-DE")
+                        {
+                            datesave = dat;
+                        }
+                        else
+                        {
+                            datesave = DateTime.Now.ToString();
+                        }
+                        break;
+                    case 1:
+                        if (s != "</td")
+                        {
+                            termine.Add(datesave + "~" + Fix(s.Replace("</td", "")));
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                counter--;
+                if (s.Contains("tr class=\"\""))
+                {
+                    counter = 8;
+                }
+            }
+            foreach (string s in termine)
+            {
+                var splitTer = s.Split('~');
+
+                CultureInfo ci = new CultureInfo("de-DE");
+                // Get the DateTimeFormatInfo for the en-US culture.
+                DateTimeFormatInfo dtfi = ci.DateTimeFormat;
+                DayOfWeek dow = Convert.ToDateTime(splitTer[0]).DayOfWeek;
+                mvm.SchulaufgabenUndSonstige.Add(new Klassen.Termine(dtfi.GetShortestDayName(dow), splitTer[0], splitTer[1]));
+
+            }
+        }
         public async Task GetSpeiseplan()
         {
             List<string> sp = new List<string>();
@@ -461,6 +740,7 @@ namespace DigikabuRework.Connection
                         {
                             gerichte[gerichte.Count - 1] += ausgabe + " ";
                         }
+                      
                     }
                 }
             }

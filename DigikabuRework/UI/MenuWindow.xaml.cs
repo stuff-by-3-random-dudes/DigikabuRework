@@ -60,52 +60,55 @@ namespace DigikabuRework.UI
         }
         private void ListView_Click(object sender, MouseButtonEventArgs e)
         {
-            if((sender as ListView).SelectedIndex != 1)
-            {
-                DestroyFrame();
-                selectedIndex = (sender as ListView).SelectedIndex;
-            }
 
+
+           
+                if ((sender as ListView).SelectedIndex != 1)
+                {
+                    DestroyFrame();
+                    selectedIndex = (sender as ListView).SelectedIndex;
+                }
+
+                switch ((sender as ListView).SelectedIndex)
+                {
+                    case 1:
+                        TimerWindow tw = new TimerWindow();
+                        tw.Show();
+                        goto case 8;
+                    case 0:
+                        load_frame.Content = new Frames.Tagesplan_Termine();
+                        Fenster.Text = "Digikabu - Termine";
+                        break;
+                    case 2:
+                        load_frame.Content = new Frames.WochenStundenPlan();
+                        Fenster.Text = "Digikabu - Wochenstundenplan";
+                        break;
+                    case 3:
+                        load_frame.Content = new Frames.Schulaufgaben();
+                        Fenster.Text = "Digikabu - Schulaufgabenplan";
+                        break;
+                    case 4:
+                        load_frame.Content = new Frames.Speiseplan();
+                        Fenster.Text = "Digikabu - Speiseplan";
+                        break;
+                    case 5:
+
+                        Fenster.Text = "Digikabu - Entschuldigung";
+                        break;
+                    case 6:
+                        load_frame.Content = new Frames.Fehlzeiten();
+                        Fenster.Text = "Digikabu - Fehlzeiten";
+                        break;
+                    case 7:
+
+                        Fenster.Text = "Digikabu - Einstellungen";
+                        break;
+                    case 8:
+                        (sender as ListView).SelectedIndex = selectedIndex;
+                        Console.WriteLine((sender as ListView).SelectedIndex);
+                        break;
+                }
             
-            switch ((sender as ListView).SelectedIndex)
-            {
-                case 1:
-                    TimerWindow tw = new TimerWindow();
-                    tw.Show();
-                    goto case 8;
-                case 0:
-                    load_frame.Content = new Frames.Tagesplan_Termine();
-                    Fenster.Text = "Digikabu - Termine";
-                    break;
-                case 2:
-                    load_frame.Content = new Frames.WochenStundenPlan();
-                    Fenster.Text = "Digikabu - Wochenstundenplan";
-                    break;
-                case 3:
-                    
-                    Fenster.Text = "Digikabu - Schulaufgabenplan";
-                    break;
-                case 4:
-                    load_frame.Content = new Frames.Speiseplan();
-                    Fenster.Text = "Digikabu - Speiseplan";
-                    break;
-                case 5:
-                    
-                    Fenster.Text = "Digikabu - Entschuldigung";
-                    break;
-                case 6:
-                    
-                    Fenster.Text = "Digikabu - Fehlzeiten";
-                    break;
-                case 7:
-                    
-                    Fenster.Text = "Digikabu - Einstellungen";
-                    break;
-                case 8:
-                    (sender as ListView).SelectedIndex = selectedIndex;
-                    Console.WriteLine((sender as ListView).SelectedIndex);
-                    break;
-            }
         }
 
         private void Window_Close(object sender, RoutedEventArgs e)

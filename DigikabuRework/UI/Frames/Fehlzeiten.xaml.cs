@@ -16,16 +16,16 @@ using System.Windows.Shapes;
 namespace DigikabuRework.UI.Frames
 {
     /// <summary>
-    /// Interaktionslogik für Speiseplan.xaml
+    /// Interaktionslogik für Fehlzeiten.xaml
     /// </summary>
-    public partial class Speiseplan : Page, IDisposable
+    public partial class Fehlzeiten : Page, IDisposable
     {
         MainViewModel mvm;
 
-        public Speiseplan()
+        public Fehlzeiten()
         {
             mvm = (MainViewModel)FindResource("mvm");
-            mvm.GetSpeiseplan();
+            mvm.GetFehlzeiten();
             InitializeComponent();
         }
 

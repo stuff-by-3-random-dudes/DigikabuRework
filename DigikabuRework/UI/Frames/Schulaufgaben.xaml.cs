@@ -16,22 +16,21 @@ using System.Windows.Shapes;
 namespace DigikabuRework.UI.Frames
 {
     /// <summary>
-    /// Interaktionslogik für Speiseplan.xaml
+    /// Interaktionslogik für Schulaufgaben.xaml
     /// </summary>
-    public partial class Speiseplan : Page, IDisposable
+    public partial class Schulaufgaben : Page, IDisposable
     {
         MainViewModel mvm;
-
-        public Speiseplan()
+        public Schulaufgaben()
         {
             mvm = (MainViewModel)FindResource("mvm");
-            mvm.GetSpeiseplan();
+            mvm.GetSchulaufgaben();
             InitializeComponent();
         }
 
         public void Dispose()
         {
-           
+          
         }
     }
 }
