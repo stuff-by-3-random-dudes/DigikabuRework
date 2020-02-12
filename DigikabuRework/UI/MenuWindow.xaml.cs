@@ -62,7 +62,7 @@ namespace DigikabuRework.UI
         {
 
 
-                if((sender as ListView).SelectedIndex != selectedIndex)
+            if ((sender as ListView).SelectedIndex != selectedIndex)
             {
                 if ((sender as ListView).SelectedIndex != 1)
                 {
@@ -113,8 +113,6 @@ namespace DigikabuRework.UI
                         break;
                 }
             }
-               
-            
         }
 
         private void Window_Close(object sender, RoutedEventArgs e)
