@@ -95,16 +95,18 @@ namespace DigikabuRework.UI
                             if (index < mvm.Stundenplan.Count && index > 0)
                             {
                                 mvm.NaechsteStunde = mvm.Stundenplan[index];
+                                
+                                tbNaechste.Visibility = Visibility.Visible;
                             }
                             else if (index == mvm.Stundenplan.Count)
                             {
                                 mvm.NaechsteStunde = null;
+                                tbNaechste.Visibility = Visibility.Hidden;
                             }
                             break;
                         }
                     }
                     tbJetzt.Visibility = Visibility.Visible;
-                    tbNaechste.Visibility = Visibility.Visible;
                 }
                 // Wenn nach Unterricht
                 if (DateTime.Now.Subtract(Klassen.StundenDauer.StundenDauerListe[Klassen.StundenDauer.StundenDauerListe.Count - 1].Ende) > new TimeSpan(0))//17- 16.5
