@@ -14,6 +14,30 @@ namespace DigikabuRework
 {
     class MainViewModel : BaseModel
     {
+        private Stunde aktuelleStunde = new Stunde();
+
+        public Stunde AktuelleStunde
+        {
+            get { return aktuelleStunde; }
+            set
+            {
+                aktuelleStunde = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Stunde naechsteStunde = new Stunde();
+
+        public Stunde NaechsteStunde
+        {
+            get { return naechsteStunde; }
+            set 
+            {
+                naechsteStunde = value;
+                OnPropertyChanged();
+            }
+        }
+
         private TimeSpan zeitBisNaechsteStunde = new TimeSpan();
         public TimeSpan ZeitBisNaechsteStunde
         {
@@ -123,6 +147,7 @@ namespace DigikabuRework
 
         public SchuelerInfo Sinfo { get; set; }
 
+        public bool TimerIsOpen { get; set; } = false;
 
         public MainViewModel()
         {
@@ -143,7 +168,6 @@ namespace DigikabuRework
             if (KeepData)
             {
                 Settings.Default.UserName = UserName;
-
             }
             else
             {
