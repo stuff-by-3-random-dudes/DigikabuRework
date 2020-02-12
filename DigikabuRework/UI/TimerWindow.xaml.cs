@@ -77,6 +77,9 @@ namespace DigikabuRework.UI
                     mvm.NaechsteStunde = mvm.Stundenplan[0];
 
                     mvm.ZeitBisNaechsteStunde = Klassen.StundenDauer.StundenDauerListe[0].Anfang.Subtract(DateTime.Now);
+
+                    tbJetzt.Visibility = Visibility.Hidden;
+                    tbNaechste.Visibility = Visibility.Visible;
                 }
                 // Wenn im Unterricht
                 else
@@ -100,6 +103,8 @@ namespace DigikabuRework.UI
                             break;
                         }
                     }
+                    tbJetzt.Visibility = Visibility.Visible;
+                    tbNaechste.Visibility = Visibility.Visible;
                 }
                 // Wenn nach Unterricht
                 if (DateTime.Now.Subtract(Klassen.StundenDauer.StundenDauerListe[Klassen.StundenDauer.StundenDauerListe.Count - 1].Ende) > new TimeSpan(0))//17- 16.5
@@ -107,6 +112,8 @@ namespace DigikabuRework.UI
                     mvm.ZeitBisNaechsteStundeAsString = "Unterricht heute vorbei";
                     mvm.AktuelleStunde = null;
                     mvm.NaechsteStunde = null;
+                    tbJetzt.Visibility = Visibility.Hidden;
+                    tbNaechste.Visibility = Visibility.Hidden;
                 }
             }
             catch (Exception)

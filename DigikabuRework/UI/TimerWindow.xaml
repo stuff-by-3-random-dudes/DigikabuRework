@@ -19,8 +19,10 @@
         <Label Content="Zeit bis Stundenwechsel" HorizontalAlignment="Left" Margin="3,2,0,0" VerticalAlignment="Top" FontSize="18" Foreground="White"/>
         <TextBlock HorizontalAlignment="Left" Margin="226,3,0,0" TextWrapping="Wrap" Text="X" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
         <Button Content="Button" HorizontalAlignment="Left" Margin="222,2,0,0" VerticalAlignment="Top" Width="18" Background="{x:Null}" BorderBrush="{x:Null}" Height="25" Click="Window_Close"/>
-        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="85,57,0,0" TextWrapping="Wrap" Text="{Binding AktuelleStunde.Fach}"/>
+        <TextBlock x:Name="tbJetzt" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="84,41,0,0" TextWrapping="Wrap" Text="Jetzige Stunde:" Visibility="Hidden"/>
+        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,57,0,0" TextWrapping="Wrap" Text="{Binding AktuelleStunde.Fach}" Width="222" TextAlignment="Center" />
         <Label Content="{Binding ZeitBisNaechsteStundeAsString}" Margin="30,78,35,44" FontSize="16" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"></Label>
-        <TextBlock HorizontalAlignment="Left" Margin="85,154,0,0" TextWrapping="Wrap" Text="{Binding NaechsteStunde.Fach}" VerticalAlignment="Top"/>
+        <TextBlock x:Name="tbNaechste" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="82,154,0,0" TextWrapping="Wrap" Text="Nächste Stunde:" Visibility="Hidden"/>
+        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,170,0,0" TextWrapping="Wrap" Text="{Binding NaechsteStunde.Fach}" Width="222" TextAlignment="Center"/>
     </Grid>
 </Window>
