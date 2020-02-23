@@ -13,6 +13,12 @@ namespace DigikabuRework.Connection
     class DigiCon
     {
         private MainViewModel mvm;
+        static HttpClient client_old = new HttpClient(new HttpClientHandler
+        {
+            AllowAutoRedirect = true,
+            UseCookies = true,
+            CookieContainer = new CookieContainer()
+        });
         static HttpClient client = new HttpClient(new HttpClientHandler
         {
             AllowAutoRedirect = true,
@@ -22,6 +28,7 @@ namespace DigikabuRework.Connection
         public DigiCon(MainViewModel mvm)
         {
             this.mvm = mvm;
+           
         }
 
         public async Task LoginAsync()
@@ -110,7 +117,11 @@ namespace DigikabuRework.Connection
         {     
             await Relog();
             mvm.Terminplan = await GetTermine();
-            mvm.Stundenplan = await GetStunden(t);
+            if(DateTime.Now.DayOfWeek != DayOfWeek.Saturday && DateTime.Now.DayOfWeek != DayOfWeek.Sunday)
+            {
+                mvm.Stundenplan = await GetStunden(t);
+            }
+            
         }
         public async Task<List<Stunde>> GetStunden(DateTime tag)
         {

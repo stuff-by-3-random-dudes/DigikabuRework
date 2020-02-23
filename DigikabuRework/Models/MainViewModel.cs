@@ -77,7 +77,7 @@ namespace DigikabuRework
             }
         }
 
-        private string zeitBisNaechsteStundeAsString = "Hello There\nGeneral Kenobi";
+        private string zeitBisNaechsteStundeAsString = "Kein Stundenplan vorhanden";
         public string ZeitBisNaechsteStundeAsString
         {
             get
