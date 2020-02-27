@@ -117,185 +117,244 @@ namespace DigikabuRework.Connection
         {     
             await Relog();
             mvm.Terminplan = await GetTermine();
-            if(DateTime.Now.DayOfWeek != DayOfWeek.Saturday && DateTime.Now.DayOfWeek != DayOfWeek.Sunday)
-            {
+            
                 mvm.Stundenplan = await GetStunden(t);
-            }
+            
             
         }
         public async Task<List<Stunde>> GetStunden(DateTime tag)
         {
             List<Stunde> ret = new List<Stunde>();
+            List<Stunde> newret = new List<Stunde>();
             try
             {
-                await Relog();
-                string contag = tag.ToString("yyyy-MM-dd");
-                var response = await client.GetAsync("https://digikabu.de/Main?date="+contag);
-                var responsestring = await response.Content.ReadAsStringAsync();
-                var splitfach1 = new string[] { };
-                int fach2 = 0;
-                int fach = 0;
-                string fachsave = string.Empty;
-                bool pause = false;
-                string klassenzimmer = string.Empty;
-                string lehrer = string.Empty;
-                bool naechste = false;
-                bool written = false;
-                foreach (string s in responsestring.Split('<'))
+                try
                 {
-                    if (written)
+                    await Relog();
+                    string contag = tag.ToString("yyyy-MM-dd");
+                    var response = await client.GetAsync("https://digikabu.de/Main?date=" + contag);
+                    var responsestring = await response.Content.ReadAsStringAsync();
+                    var splitfach1 = new string[] { };
+                    int fach2 = 0;
+                    int fach = 0;
+                    string fachsave = string.Empty;
+                    bool pause = false;
+                    string klassenzimmer = string.Empty;
+                    string lehrer = string.Empty;
+                    bool naechste = false;
+                    bool written = false;
+                    bool checkifkill = false;
+                    foreach (string s in responsestring.Split('<'))
                     {
-                        lehrer = string.Empty;
-                        written = false;
-                    }
-                    if (s.Contains("svg x="))
-                    {
-                        string[] split = s.Split(' ');
-                        string[] fach1 = split[2].Split('\'');
-                        string[] fachx = split[4].Split('\'');
-                        splitfach1 = split[1].Split('\'');
-                        //splitfach2 = split[3].Split('\'');
-                        fach2 = Convert.ToInt32(fachx[1]) / 60;
-                        fach = Convert.ToInt32(fach1[1]) / 60;
-                    }
-                    if (s.StartsWith("text class='sp' y='13' x='2'"))
-                    {
-                        string[] split = s.Split('>');
-                       
-                        lehrer = split[1];
-
-                        
-                    }else if(s.StartsWith("text class='sp_small' y='13' x='2'"))
-                    {
-                        string[] split = s.Split('>');
-                        if (!naechste)
+                        if (checkifkill && s.StartsWith("/svg>"))
                         {
+                            mvm.frei = true;
+                            throw new Exception("aaa");
+                        }
+                        else if (checkifkill && !s.StartsWith("/svg>"))
+                        {
+                            checkifkill = false;
+                        }
+                        if (s.StartsWith("svg width='230' height='600' style='background-color:#F9F9F9; margin-left:10px;'>"))
+                        {
+                            checkifkill = true;
+                        }
+                        if (written)
+                        {
+                            lehrer = string.Empty;
+                            written = false;
+                        }
+                        if (s.Contains("svg x="))
+                        {
+                            string[] split = s.Split(' ');
+                            string[] fach1 = split[2].Split('\'');
+                            string[] fachx = split[4].Split('\'');
+                            splitfach1 = split[1].Split('\'');
+                            //splitfach2 = split[3].Split('\'');
+                            fach2 = Convert.ToInt32(fachx[1]) / 60;
+                            fach = Convert.ToInt32(fach1[1]) / 60;
+                        }
+                        if (s.StartsWith("text class='sp' y='13' x='2'"))
+                        {
+                            string[] split = s.Split('>');
+
                             lehrer = split[1];
-                        }
-                        else
-                        {
-                            lehrer += $"/{split[0]}";
-                        }
-                    }
 
-                    if (s.Contains("text-anchor='end'"))
-                    {
-                        string[] split = s.Split('>');
-                        klassenzimmer = split[1];
-                    }
-                   
-                    if (s.Contains("text-anchor='middle'"))
-                    {
-                        string stunde;
-                        string[] split = s.Split('>');
-                        stunde = split[1];
-                        if (fach2 < 2)
+
+                        }
+                        else if (s.StartsWith("text class='sp_small' y='13' x='2'"))
                         {
-                            if (fach == 2)
+                            string[] split = s.Split('>');
+                            if (!naechste)
                             {
-                                if (!pause)
-                                {
-                                    ret.Add(new Klassen.Stunde(Schulstunden.Pause, "Pause", "Keiner", klassenzimmer));
+                                lehrer = split[1];
+                            }
+                            else
+                            {
+                                lehrer += $"/{split[0]}";
+                            }
+                        }
 
-                                    pause = true;
+                        if (s.Contains("text-anchor='end'"))
+                        {
+                            string[] split = s.Split('>');
+                            klassenzimmer = split[1];
+                        }
+
+                        if (s.Contains("text-anchor='middle'"))
+                        {
+                            string stunde;
+                            string[] split = s.Split('>');
+                            stunde = split[1];
+                            if (fach2 < 2)
+                            {
+                                if (fach == 2)
+                                {
+                                    if (!pause)
+                                    {
+                                        ret.Add(new Klassen.Stunde(Schulstunden.Pause, "Pause", "Keiner", klassenzimmer));
+
+                                        pause = true;
+                                    }
+                                }
+                                if (splitfach1[1] != "115")
+                                {
+                                    if (!naechste)
+                                    {
+                                        ret.Add(new Klassen.Stunde((Klassen.Schulstunden)fach, stunde, lehrer, klassenzimmer));
+                                        written = true;
+                                    }
+                                }
+                                else
+                                {
+
                                 }
                             }
-                            if (splitfach1[1] != "115")
+                            else if (fach2 == 2)
                             {
-                                if (!naechste)
+                                if (fach == 2)
                                 {
-                                    ret.Add(new Klassen.Stunde((Klassen.Schulstunden)fach, stunde, lehrer, klassenzimmer));
-                                    written = true;
+                                    if (!pause)
+                                    {
+                                        ret.Add(new Klassen.Stunde(Schulstunden.Pause, "Pause", "Keiner", klassenzimmer));
+                                        pause = true;
+                                    }
+                                }
+                                if (splitfach1[1] != "115")
+                                {
+                                    if (!naechste)
+                                    {
+                                        ret.Add(new Klassen.Stunde((Klassen.Schulstunden)fach, stunde, lehrer, klassenzimmer));
+                                        ret.Add(new Klassen.Stunde((Klassen.Schulstunden)fach + 1, stunde, lehrer, klassenzimmer));
+                                        written = true;
+                                    }
+                                }
+                                else
+                                {
+
                                 }
                             }
                             else
                             {
-
-                            }
-                        }
-                        else if (fach2 == 2)
-                        {
-                            if (fach == 2)
-                            {
-                                if (!pause)
+                                if (splitfach1[1] != "115")
                                 {
-                                    ret.Add(new Klassen.Stunde(Schulstunden.Pause, "Pause", "Keiner", klassenzimmer));
-                                    pause = true;
+                                    if (!naechste)
+                                    {
+                                        ret.Add(new Klassen.Stunde((Klassen.Schulstunden)fach, stunde, lehrer, klassenzimmer));
+                                        ret.Add(new Klassen.Stunde((Klassen.Schulstunden)fach + 1, stunde, lehrer, klassenzimmer));
+                                        ret.Add(new Klassen.Stunde((Klassen.Schulstunden)fach + 2, stunde, lehrer, klassenzimmer));
+                                        written = true;
+                                    }
                                 }
-                            }
-                            if (splitfach1[1] != "115")
-                            {
-                                if (!naechste)
+                                else
                                 {
-                                    ret.Add(new Klassen.Stunde((Klassen.Schulstunden)fach, stunde, lehrer, klassenzimmer));
-                                    ret.Add(new Klassen.Stunde((Klassen.Schulstunden)fach + 1, stunde, lehrer, klassenzimmer));
-                                    written = true;
-                                }
-                            }
-                            else
-                            {
 
-                            }
-                        }
-                        else
-                        {
-                            if (splitfach1[1] != "115")
-                            {
-                                if (!naechste)
-                                {
-                                    ret.Add(new Klassen.Stunde((Klassen.Schulstunden)fach, stunde, lehrer, klassenzimmer));
-                                    ret.Add(new Klassen.Stunde((Klassen.Schulstunden)fach + 1, stunde, lehrer, klassenzimmer));
-                                    ret.Add(new Klassen.Stunde((Klassen.Schulstunden)fach + 2, stunde, lehrer, klassenzimmer));
-                                    written = true;
                                 }
-                            }
-                            else
-                            {
-
                             }
                         }
                     }
+                    lehrer = string.Empty;
                 }
-                lehrer = string.Empty;
+                catch (Exception)
+                {
+                    
+                    
+                    throw new Exception();
+                }
             }
             catch (Exception)
             {
-
-                throw;
-            }
-            
-            int z = 0;
-            List<Stunde> newret = new List<Stunde>();
-            foreach(var item in ret)
-            {
-                if ((int)item.Stn == 10)
+                if(mvm.frei == true)
                 {
-                    z--;
-                }
-                if (z == (int)item.Stn || (int) item.Stn == 10)
-                {
-                    Console.WriteLine("same" + item.Fach);
-                    newret.Add(item);
+                    newret.Add(new Stunde(Schulstunden.Erste, "Frei"));
+                    newret.Add(new Stunde(Schulstunden.Zweite, "Frei"));
+                    newret.Add(new Stunde(Schulstunden.Dritte, "Frei"));
+                    newret.Add(new Stunde(Schulstunden.Vierte, "Frei"));
+                    newret.Add(new Stunde(Schulstunden.Fuenfte, "Frei"));
+                    newret.Add(new Stunde(Schulstunden.Sechste, "Frei"));
+                    newret.Add(new Stunde(Schulstunden.Siebte, "Frei"));
+                    newret.Add(new Stunde(Schulstunden.Achte, "Frei"));
+                    newret.Add(new Stunde(Schulstunden.Neunte, "Frei"));
+                    newret.Add(new Stunde(Schulstunden.Zehnte, "Frei"));
+                    return newret;
                 }
                 else
                 {
-                    newret.Add(new Stunde((Schulstunden)z, "Kein Unterricht"));
-                    newret.Add(item);
-                    Console.WriteLine("Fach: "+item.Fach+" FS"+(int)item.Stn+" SS" + z);
+                    throw;
+                }
+            }
+            
+            
+            if (!mvm.frei)
+            {
+                int z = 0;
+                foreach (var item in ret)
+                {
+                    if ((int)item.Stn == 10)
+                    {
+                        z--;
+                    }
+                    if (z == (int)item.Stn || (int)item.Stn == 10)
+                    {
+                        Console.WriteLine("same" + item.Fach);
+                        newret.Add(item);
+                    }
+                    else
+                    {
+                        newret.Add(new Stunde((Schulstunden)z, "Kein Unterricht"));
+                        newret.Add(item);
+                        Console.WriteLine("Fach: " + item.Fach + " FS" + (int)item.Stn + " SS" + z);
+                        z++;
+                    }
+
                     z++;
                 }
-               
-                z++;
-            }
-            if(newret.Count < 11)
-            {
-                int unterschied = 11 - newret.Count;
-                while(unterschied != 0)
+                if (newret.Count < 11)
                 {
-                    newret.Add(new Stunde((Schulstunden)newret.Count-1, "Kein Unterricht"));
-                    unterschied--;
+                    int unterschied = 11 - newret.Count;
+                    while (unterschied != 0)
+                    {
+                        newret.Add(new Stunde((Schulstunden)newret.Count - 1, "Kein Unterricht"));
+                        unterschied--;
+                    }
                 }
             }
+            else
+            {
+                newret.Add(new Stunde(Schulstunden.Erste, "Frei"));
+                newret.Add(new Stunde(Schulstunden.Zweite, "Frei"));
+                newret.Add(new Stunde(Schulstunden.Dritte, "Frei"));
+                newret.Add(new Stunde(Schulstunden.Vierte, "Frei"));
+                newret.Add(new Stunde(Schulstunden.Fuenfte, "Frei"));
+                newret.Add(new Stunde(Schulstunden.Sechste, "Frei"));
+                newret.Add(new Stunde(Schulstunden.Siebte, "Frei"));
+                newret.Add(new Stunde(Schulstunden.Achte, "Frei"));
+                newret.Add(new Stunde(Schulstunden.Neunte, "Frei"));
+                newret.Add(new Stunde(Schulstunden.Zehnte, "Frei"));
+            }
+            
+            
+            
             return newret;
         }
 

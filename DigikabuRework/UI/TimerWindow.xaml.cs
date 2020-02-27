@@ -27,7 +27,7 @@ namespace DigikabuRework.UI
             mvm = (MainViewModel)FindResource("mvm");
             mvm.TimerIsOpen = true;
             InitializeComponent();
-            if(DateTime.Now.DayOfWeek != DayOfWeek.Saturday && DateTime.Now.DayOfWeek != DayOfWeek.Sunday)
+            if(DateTime.Now.DayOfWeek != DayOfWeek.Saturday && DateTime.Now.DayOfWeek != DayOfWeek.Sunday && !mvm.frei)
             {
                 SetupTimer();
             }

@@ -66,18 +66,22 @@ namespace DigikabuRework.UI.Frames
         {
             foreach (Stunde item in SP.ItemsSource)
             {
-                var row = SP.ItemContainerGenerator.ContainerFromItem(item) as DataGridRow;
-                if (item.Std.AktuelleStunde())//item.Schulstunde == "1"
+                if (!mvm.frei)
                 {
-                    if (row != null)
+                    var row = SP.ItemContainerGenerator.ContainerFromItem(item) as DataGridRow;
+                    if (item.Std.AktuelleStunde())//item.Schulstunde == "1"
                     {
-                        row.Background = Brushes.DarkGray;
+                        if (row != null)
+                        {
+                            row.Background = Brushes.DarkGray;
+                        }
+                    }
+                    else if (row != null)
+                    {
+                        row.Background = this.Background;
                     }
                 }
-                else if(row != null)
-                {
-                    row.Background = this.Background;
-                }
+                
             }
         }
 

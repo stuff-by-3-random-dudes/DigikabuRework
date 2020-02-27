@@ -16,6 +16,7 @@ namespace DigikabuRework
     {
         private Stunde aktuelleStunde = new Stunde();
 
+        public bool frei { get; set; } = false;
         public Stunde AktuelleStunde
         {
             get { return aktuelleStunde; }
@@ -77,7 +78,7 @@ namespace DigikabuRework
             }
         }
 
-        private string zeitBisNaechsteStundeAsString = "Kein Stundenplan vorhanden";
+        private string zeitBisNaechsteStundeAsString = "Frei";
         public string ZeitBisNaechsteStundeAsString
         {
             get
@@ -156,6 +157,7 @@ namespace DigikabuRework
             KeepData = Settings.Default.keepData;
             connection = new DigiCon(this);
             
+
         }
 
         public async Task GetSchulaufgaben()
